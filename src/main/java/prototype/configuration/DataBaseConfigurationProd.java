@@ -14,7 +14,7 @@ public class DataBaseConfigurationProd {
     @Bean
     public BasicDataSource dataSource(){
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl("jdbc:postgresql://prototype-instance.cp5z8bxoxuib.us-east-2.rds.amazonaws.com:5432/prototype");
+        basicDataSource.setUrl("jdbc:postgresql://db-prototype-instance.ctko8o4goca2.sa-east-1.rds.amazonaws.com:5432/prototype");
         basicDataSource.setUsername("prototype");
         basicDataSource.setPassword("prototype");
 
