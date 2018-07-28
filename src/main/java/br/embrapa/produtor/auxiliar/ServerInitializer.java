@@ -60,16 +60,16 @@ public class ServerInitializer implements ApplicationRunner {
     @Autowired
     ComentarioServiceImplements comentarioService;
 
-    @Autowired
+   /* @Autowired
     JavaMailSender mailSender;
-
+*/
     @Autowired
     AmazonS3Client amazonS3Client;
 
     @Override
     public void run(ApplicationArguments applicationArguments){
 
-        this.enviarEmailTeste();
+      //  this.enviarEmailTeste();
         this.persistirRoles();
         this.persistirTiposCulturas();
         this.persistirCultura();
@@ -399,7 +399,7 @@ public class ServerInitializer implements ApplicationRunner {
         }
     }
 
-    protected void enviarEmailTeste(){
+   /* protected void enviarEmailTeste(){
 
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -414,5 +414,5 @@ public class ServerInitializer implements ApplicationRunner {
             e.printStackTrace();
             // return "Erro ao enviar email.";
         }
-    }
+    }*/
 }

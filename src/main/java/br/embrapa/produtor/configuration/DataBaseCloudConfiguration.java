@@ -13,9 +13,9 @@ public class DataBaseCloudConfiguration {
     @Bean
     public BasicDataSource dataSource(){
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl("jdbc:postgresql://db-prototype-instance.ctko8o4goca2.sa-east-1.rds.amazonaws.com:5432/prototype");
-        basicDataSource.setUsername("prototype");
-        basicDataSource.setPassword("prototype");
+        basicDataSource.setUrl("jdbc:postgresql://embrapa-produtor.ctko8o4goca2.sa-east-1.rds.amazonaws.com:5432/embrapaprodutor");
+        basicDataSource.setUsername("postgres");
+        basicDataSource.setPassword("postgres");
 
         return basicDataSource;
     }
