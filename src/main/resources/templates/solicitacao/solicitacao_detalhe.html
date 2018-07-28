@@ -1,0 +1,60 @@
+<div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="solicitacao_detalhe">
+        <div class="row">
+            <section class="pagination section">
+                <div class="col s12">
+                    <div class="card">
+                        <div th:if="${solicitacao}">
+                            <div class="card">
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <div class="">
+                                                <h7 class="title grey-text" th:text="'Código: ' + ${solicitacao.id}"></h7>
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <div class="">
+                                                <h7 class="grey-text" th:text="'Data: ' + ${#temporals.format(solicitacao.data_requisicao, 'dd/MM/yyyy    HH:mm')} + 'hs'">Data</h7>
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <div class="">
+                                                <h7 class="grey-text" th:text="'Planta: ' + ${solicitacao.cultura.nome}">Cultura</h7>
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <div class="">
+                                                <h7 class="grey-text" th:text="'Título: ' + ${solicitacao.titulo}"></h7>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s12">
+                                    <div class="">
+                                        <h6 class="green-text"><b>Descrição:</b></h6>
+                                        <p class="grey-text" th:text="${solicitacao.descricao}" disabled>Descrição</p>
+                                    </div>
+                                </div>
+                                <div class="row center">
+                                    <div th:if="${fotos}">
+                                        <div th:each="foto : ${fotos}">
+                                            <div class="col s12 l4 center">
+                                                <a th:href="@{'/detalhes-imagem/' + ${foto.id}}">
+                                                    <img th:src="@{${foto?.caminho_foto}}" style="width: 200px; height: 200px">
+<!--
+                                                    <img th:src="@{'data:image/png;base64,' + ${foto?.caminho_foto}}" style="width: 200px; height: 200px">
+-->
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

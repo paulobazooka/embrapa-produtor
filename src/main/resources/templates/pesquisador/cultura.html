@@ -1,0 +1,75 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div th:fragment="cultura">
+        <div class="row">
+            <section class="section">
+                    <div class="col s12">
+                        <div class="card">
+                            <div sec:authorize="hasRole('ROLE_PESQUISADOR')">
+                                <a class="btn tooltipped green modal-trigger" data-position="right" data-delay="50" data-tooltip="Nova Cultura" href="#cadastrar-cultura"><i class="material-icons">add</i></a>
+                            </div>
+                            <div class="row">
+                                <h5 class="title green-text center">CULTURAS</h5>
+                            </div>
+                            <table id="tabela" th:table="true" class="highlight centered responsive-table">
+                                <thead>
+                                <tr>
+                                    <th sec:authorize="hasRole('ROLE_PESQUISADOR')">CÓDIGO</th>
+                                    <th>NOME</th>
+                                    <th>NOME CIENTÍFICO</th>
+                                    <th>TIPO</th>
+                                    <th sec:authorize="hasRole('ROLE_PESQUISADOR')">EDITAR</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <div th:if="${culturas}">
+                                    <tr th:each="cultura :${culturas}">
+                                        <td sec:authorize="hasRole('ROLE_PESQUISADOR')"> <span th:text="${cultura.id}"></span></td>
+                                        <td> <span th:text="${cultura.nome}"></span></td>
+                                        <td> <span th:text="${cultura.nomecientifico}"></span></td>
+                                        <td> <span th:text="${cultura.tipo.tipo}"></span></td>
+                                        <td sec:authorize="hasRole('ROLE_PESQUISADOR')"><a href="#" class="btn-small blue waves-effect waves-light"><i class="material-icons">edit</i></a></td>
+                                    </tr>
+                                </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </section>
+        </div>
+
+        <div class="modal" id="cadastrar-cultura" sec:authorize="hasRole('ROLE_PESQUISADOR')">
+            <h5 class="title green-text center">Cadastro de Cultura</h5>
+            <form th:action="@{/pesquisador/cadastro-cultura}" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <div th:if="${tipos}">
+                            <select id="tipo" name="tipo" required>
+                                <option disabled selected value="0">Tipo de Cultura</option>
+                                <option th:each="tipo : ${tipos}" th:value="${tipo.tipo}" th:text="${tipo.tipo}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons"></i>
+                        <input type="text" id="nome" name="nome">
+                        <label for="nome">Nome da Cultura</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons"></i>
+                        <input type="text" id="nomecientifico" name="nomecientifico">
+                        <label for="nomecientifico">Nome Científico</label>
+                    </div>
+
+                    <div class="col s12 container">
+                        <input class="btn btn-large red modal-close"  type="reset" value="CANCELAR">
+                        <input class="btn btn-large orange" type="reset" value="LIMPAR">
+                        <input class="btn btn-large green" type="submit" value="CADASTRAR">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

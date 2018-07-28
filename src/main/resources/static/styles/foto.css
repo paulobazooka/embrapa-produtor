@@ -1,0 +1,24 @@
+.wallpaper {
+    background-image: url("../images/trigo3.jpeg");
+    background-size: auto;
+    position: absolute;
+    min-height: 900px;
+    max-height: 1200px;
+    width: 100%;
+}
+
+#menu{
+    background: linear-gradient(to top, #66BB6A , #0f9d58);
+}
+
+#submenu{
+    background: linear-gradient(to top, #66BB6A , #0f9d58);
+}
+
+
+footer{
+    background: linear-gradient(to bottom, #66BB6A , #0f9d58);
+    position:absolute;
+    bottom:0;
+    width:100%;
+}

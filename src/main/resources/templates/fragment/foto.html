@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt=br"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:layout="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Embrapa Produtor</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/materialize/css/materialize.min.css}" href="../../static/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link th:href="@{/styles/foto.css}" href="../../static/styles/foto.css" type="text/css" rel="stylesheet" media="screen,projection">
+</head>
+
+<body>
+    <div class="wallpaper">
+        <!-- INICIO DO CABEÇALHO -->
+        <header>
+            <nav id="menu">
+                <div class="nav-wrapper">
+                    <div>
+                        <img th:src="@{/images/embrapa-logo-menu.png} "src="../../static/images/embrapa-logo-menu.png" class="left responsive-img">
+                        <img th:src="@{/images/ifsp-logo.png} "src="../../static/images/ifsp-logo.png" class="left responsive-img">
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                        <!--  <p><span th:text="${user.nome}"></span></p> -->
+                    </div>
+
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="#">Perfil</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#">Administração</a></li>
+                        <li><a href="#">Solicitações</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#">Relatótios</a></li>
+                        <li><a href="https://www.embrapa.br/pt/home" target="_blank">Embrapa</a></li>
+                        <li><a href="https://cmp.ifsp.edu.br/" target="_blank">ifsp</a></li>
+                        <li><a href="#">Sobre</a></li>
+                        <li>
+                            <form action="/logout">
+                                <input type="submit" class="btn btn-small light-blue darken-4 white-text" style="margin-right: 5px" value="SAIR">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="#">Perfil</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#">ADMINISTRADOR</a></li>
+                <li><a href="#">Solicitações</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#">Relatórios</a></li>
+                <li><a href="https://www.embrapa.br/pt/home" target="_blank">Embrapa</a></li>
+                <li><a href="https://cmp.ifsp.edu.br/" target="_blank">ifsp</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li>
+                    <form action="/logout">
+                        <input type="submit" class="btn btn-small light-blue darken-4 white-text" value="SAIR">
+                    </form>
+                </li>
+            </ul>
+        </header>
+        <!-- FIM DO CABEÇALHO -->
+
+
+
+
+        <!-- INICIO DO FOOTER-->
+        <footer class="page-footer">
+            <p class="title center">Trabalho de Conclusão de Curso</p>
+            <div class="footer-copyright">
+                <div class="container">
+                            <span>
+                              Copyright ©
+                              <script type="text/javascript">
+                                  document.write(new Date().getFullYear());
+                              </script>
+                              <span class="right hide-on-small-only">
+                                  Desenvolvido por Paulo Sérgio do Nascimento
+                              </span>
+                            </span>
+                </div>
+            </div>
+        </footer>
+        <!-- FIM DO FOOTER -->
+
+    </div>
+    <!-- FIM DO WALLPAPER-->
+
+
+<!-- =============================== SCRIPTS ======================================== -->
+<!-- jQuery Library -->
+<script type="text/javascript" th:src="@{/scripts/jquery.js}" src="../../static/scripts/jquery.js"></script>
+<!--materialize js-->
+<script type="text/javascript" th:src="@{/materialize/js/materialize.min.js}" src="../../static/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" th:src="@{/scripts/foto.js}" src="../../static/scripts/foto.js"></script>
+</body>
+</html>

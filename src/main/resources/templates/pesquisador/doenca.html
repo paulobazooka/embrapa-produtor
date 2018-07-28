@@ -1,0 +1,67 @@
+<div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="doenca">
+        <div class="row">
+            <section class="pagination section">
+                <div class="col s12">
+                    <div class="card">
+                        <div sec:authorize="hasRole('ROLE_PESQUISADOR')">
+                            <a class="btn tooltipped green modal-trigger" data-position="right" data-delay="50" data-tooltip="Nova Doença" href="#nova-doenca"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="row">
+                            <h5 class="title green-text center">DOENÇAS</h5>
+                        </div>
+                        <div th:if="${culturas}">
+                            <div th:each="cultura : ${culturas}">
+                                <h6 class="green-text" th:text="${cultura.nome}"></h6>
+                                <ul th:each="doenca : ${cultura.doencas}">
+                                    <li th:text="${doenca.doenca}"></li>
+                                </ul>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${page}" class="col s12">
+                    <ul class="pagination">
+                        <li th:each="i : ${#numbers.sequence(0,page.totalPages-1)}">
+                            <a th:text="${i}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <div class="modal" id="nova-doenca">
+            <h5 class="title green-text center">Nova Doença</h5>
+            <form th:action="@{/doenca}" method="post">
+                <div class="input-field">
+                    <select class="" id="cultura" name="cultura" required>
+                        <option value="0" selected disabled>Cultura</option>
+                        <option th:each="cultura : ${culturas}" th:value="${cultura.nome}" th:text="${cultura.nome}"></option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" class="input" required>
+                </div>
+                <div class="input-field">
+                    <label for="nomecientifico">Nome Científico</label>
+                    <input type="text" id="nomecientifico" name="nomecientifico" class="input" required>
+                </div>
+                <div class="input-field">
+                    <div class="container">
+                        <div class="col s12 l4">
+                            <button type="reset" class="btn btn-large modal-close red center">CANCELAR</button>
+                        </div>
+                        <div class="col s12 l4">
+                            <button type="reset" class="btn btn-large orange center">LIMPAR</button>
+                        </div>
+                        <div class="col s12 l4">
+                            <button type="submit" class="btn btn-large green center">CADASTRAR</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

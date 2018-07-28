@@ -1,0 +1,112 @@
+<div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="solicitacao_detalhe_foto">
+        <div class="row">
+            <section class="pagination section">
+                <div class="col s12">
+                    <div class="card">
+                        <figure class="center">
+                            <div class="col s12"><h1></h1></div>
+                            <img th:src="@{${foto?.caminho_foto}}" class="responsive-img" alt="foto">
+<!--
+                            <img th:src="@{'data:image/png;base64,' + ${foto?.caminho_foto}}" class="responsive-img" alt="foto">
+-->
+                        </figure>
+                        <div class="card">
+                            <div th:if="${foto?.comentarios}">
+                                <div th:each="comentario : ${foto.comentarios}">
+                                    <div sec:authorize="hasRole('ROLE_PESQUISADOR')">
+                                        <label th:text="'Pesquisador: ' + ${comentario.pesquisador.nome}" class="col s12 green-text"></label>
+                                    </div>
+
+                                    <label th:text="'Data: ' + ${#temporals.format(comentario.data_comentario, 'dd/MM/yyyy    HH:mm')} + 'hs'" class="col s12 green-text"></label>
+                                    <label th:text="'Doença: ' + ${comentario.doenca.doenca}" class="col s12 green-text"></label>
+                                    <label class="col s12 green-text"><b>Diagnóstico:</b></label>
+                                    <div class="">
+                                        <b><p th:text="${comentario.diagnostico}" class="grey-text" style="margin-left: 10px"></p></b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div sec:authorize="hasRole('ROLE_PESQUISADOR')">
+                            <form th:action="@{'/pesquisador/inserir-comentario/' + ${foto.id}}" method="post" class="card">
+                                <div class="row">
+                                    <div class="col s12">
+                                        <div class="col s12 l4">
+                                            <div class="input-field">
+                                                <select id="do" name="do" required>
+                                                    <option disabled selected value="0">Doença</option>
+                                                    <option th:each="d : ${doencas}" th:value="${d.doenca}" th:id="${d.id}" th:text="${d.doenca}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col s12 l8">
+                                            <a class="btn btn-large green modal-trigger" href="#novaDoenca">NOVA DOENÇA</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-field">
+                                    <label for="descricao">Diagnóstico</label>
+                                    <textarea id="descricao" name="descricao" class="materialize-textarea" cols="30" rows="10"></textarea>
+                                </div>
+                                <div class="btn-block container center">
+                                    <button type="reset" class="btn btn-large orange">LIMPAR</button>
+                                    <button type="submit" class="btn btn-large green">COMENTAR</button>
+                                </div>
+                                <div class="row"><h1></h1></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- CADASTRO DE DOENCA -->
+        <div class="modal" id="novaDoenca" sec:authorize="hasRole('ROLE_PESQUISADOR')">
+            <section id="cadastro-solicitacao" class="section container">
+                <h3 class="title green-text center">Nova Doença</h3>
+
+                <form th:action="@{'/doenca-comentario/' + ${foto.id}}" method="post">
+                    <div class="row">
+                        <div class="">
+                            <div class="hide">
+                                <input type="text" id="cultura" name="cultura" th:text="${cultura.nome}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 l6">
+                            <div class="input-field">
+                                <label for="nome">Nome</label>
+                                <input type="text" id="nome" name="nome" class="input" required>
+                            </div>
+                        </div>
+                        <div class="col s12 l6">
+                            <div class="input-field">
+                                <label for="nomecientifico">Nome Científico</label>
+                                <input type="text" id="nomecientifico" name="nomecientifico" class="input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Sessão de Botões de controle-->
+                    <div class="section row">
+                        <div class="btn-block center">
+                            <div class="input-field col s12 m4 l4">
+                                <input class="input btn btn-large red modal-close" type="reset" href="home/principal" value="CANCELAR">
+                            </div>
+                            <div class="input-field col s12 m4 l4">
+                                <input class="input btn btn-large orange" id="limpar" type="reset" value="LIMPAR">
+                            </div>
+                            <div class="input-field col s12 m4 l4">
+                                <input class="input btn btn-large green" type="submit" id="btnCadastrar" value="CADASTRAR">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>

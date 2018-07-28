@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt=br"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:layout="http://www.w3.org/1999/xhtml">
+<!--================================================================================
+
+================================================================================ -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Embrapa Produtor</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/materialize/css/materialize.min.css}" href="../../static/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link th:href="@{/styles/principal.css}" href="../../static/styles/principal.css" type="text/css" rel="stylesheet" media="screen,projection">
+</head>
+
+<body>
+
+    <div class="wallpaper">
+
+        <!-- INICIO DO MENU PRINCIPAL -->
+        <nav id="menu" class="left">
+            <div  class="nav-wrapper">
+                <img th:src="@{/images/embrapa-logo-menu.png} "src="../../static/images/embrapa-logo-menu.png" class="left responsive-img" id="logo-embrapa">
+                <div class="hide-on-small-only">
+                    <img th:src="@{/images/ifsp-logo.png} "src="../../static/images/ifsp-logo.png" class="left responsive-img" id="logo-ifsp">
+                </div>
+                <div class="right" id="logout">
+                    <form action="/logout">
+                        <input type="submit" class="btn btn-small orange darken-4 white-text" style="margin-right: 5px" value="SAIR">
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- FIM DO MENU PRINCIPAL -->
+
+
+        <!-- INICIO DA PAGINA DE INFORMAÇÕES -->
+        <div class="row">
+
+
+            <!-- INICIO MENU LATERAL -->
+            <div class="col s12 l2 navegacao" id="submenu">
+                <div class="">
+                    <div class="collection with-header">
+                        <div class="collection-header navegacao">
+                            <h5 class=" white-text" th:text="${user.nome}">Usuário</h5>
+                            <h6 class=" white-text" th:text="${user.email}">e-mail</h6>
+                        </div>
+                        <a href="/usuario" class="collection-item green-text">Perfil</a>
+                        <a href="/" class="collection-item green-text">Solicitações</a>
+                        <a href="/pesquisador/pagina-cadastro-cultura" class="collection-item green-text">Plantas</a>
+                        <a sec:authorize="hasRole('ROLE_PESQUISADOR')" href="/doenca" class="collection-item green-text">Doenças</a>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/administrador/pagina" class="collection-item green-text">Administração</a>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="collection-item green-text">Relatórios</a>
+                        <a href="#" class="collection-item green-text">Sobre</a>
+                        <a href="#" class="collection-item green-text">Ajuda</a>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM MENU LATERAL -->
+
+
+            <!-- INICIO CORPO DE INFORMAÇÕES -->
+            <div class="col s12 l10" id="corpo">
+                <div th:if="${local}">
+                    <div th:replace="${local} :: ${fragmento}">
+
+                    </div>
+                </div>
+                <br><br><br><br>
+            </div>
+            <!-- FIM CORPO DE INFORMAÇÕES -->
+
+        </div>
+        <!-- FIM DA PAGINA DE INFORMAÇÕES -->
+
+        <!-- INICIO DO FOOTER-->
+        <footer class="page-footer">
+                <p class="title center">Trabalho de Conclusão de Curso</p>
+                <div class="footer-copyright">
+                    <div class="container">
+                            <span>
+                              Copyright ©
+                              <script type="text/javascript">
+                                  document.write(new Date().getFullYear());
+                              </script>
+                              <span class="right hide-on-small-only">
+                                  Desenvolvido por Paulo Sérgio do Nascimento
+                              </span>
+                            </span>
+                    </div>
+                </div>
+            </footer>
+        <!-- FIM DO FOOTER -->
+
+    </div>
+    <!-- FIM DO WALLPAPER-->
+
+    <!-- ============================================= SCRIPTS ========================================= -->
+    <script type="text/javascript" th:src="@{/scripts/jquery.js}" src="../../static/scripts/jquery.js"></script>
+    <script type="text/javascript" th:src="@{/materialize/js/materialize.min.js}" src="../../static/materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" th:src="@{/scripts/principal.js}" src="../../static/scripts/principal.js"></script>
+    <script type="text/javascript" th:src="@{/scripts/cultura.js}" src="../../static/scripts/cultura.js"></script>
+    <script type="text/javascript" th:src="@{/scripts/endereco.js}" src="../../static/scripts/endereco.js"></script>
+</body>
+</html>

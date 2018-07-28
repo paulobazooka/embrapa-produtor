@@ -1,0 +1,133 @@
+<div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="solicitacao">
+        <link th:href="@{/styles/nova_solicitacao.css}" href="../../static/styles/nova_solicitacao.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <div class="row">
+            <section class="pagination section">
+                <div class="col s12">
+                    <div class="card">
+                        <div sec:authorize="hasRole('ROLE_PRODUTOR')">
+                            <a class="btn btn-large btn-solicitacao tooltipped green modal-trigger" data-position="right" data-delay="50" data-tooltip="Nova Requisição" href="#cadastroSolicitacao">Nova Solicitação</a>
+                        </div>
+                        <div class="row">
+                            <h5 class="title green-text center">SOLICITAÇÕES</h5>
+                        </div>
+                        <div th:if="${solicitacoes}">
+                            <table id="tabela" th:table="true" class="highlight centered responsive-table">
+                                <thead>
+                                    <tr>
+                                        <th>CÓDIGO</th>
+                                        <th>TÍTULO</th>
+                                        <th>CULTURA</th>
+                                        <th>DATA</th>
+                                        <th>CIDADE</th>
+                                        <th>ESTADO</th>
+                                        <th>VISUALISAR</th>
+                                        <th sec:authorize="hasRole('ROLE_PESQUISADOR')">EDITAR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <div>
+                                        <tr th:each="solicitacao :${solicitacoes}">
+                                            <td> <span th:text="${solicitacao.id}"></span>             </td>
+                                            <td> <span th:text="${solicitacao.titulo}"></span>         </td>
+                                            <td> <span th:text="${solicitacao.cultura.nome}"></span>   </td>
+                                            <td> <span th:text="${#temporals.format(solicitacao.data_requisicao, 'dd/MM/yyyy HH:mm')} + 'hs'"></span></td>
+                                            <td> <span th:text="${solicitacao.cidade}"></span>         </td>
+                                            <td> <span th:text="${solicitacao.estado}"></span>         </td>
+                                            <td> <a href="#" th:href="@{'/detalhes-solicitacao/' + ${solicitacao.id}}" class="btn-small orange waves-effect waves-light"><i class="material-icons">visibility</i></a></td>
+                                            <td sec:authorize="hasRole('ROLE_PESQUISADOR')"><a href="#" class="btn-small blue waves-effect waves-light"><i class="material-icons">edit</i></a></td>
+                                        </tr>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="col s12 l3">
+                        <div class="card">
+                            <div th:if="${solicitacoes.totalPages} lt 0">
+                                <ul class="pagination">
+                                    <li th:each="i : ${#numbers.sequence(0,solicitacoes.totalPages-1)}">
+                                        <a th:href="@{/(page=${i})}" th:text="${i}" th:classappend="${page} eq ${i}? 'active': ''" class="waves-effect"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="cadastroSolicitacao" class="modal" sec:authorize="hasRole('ROLE_PRODUTOR')">
+            <section id="cadastro-solicitacao" class="section container">
+
+                        <h3 class="title green-text center">Nova Solicitação</h3>
+
+                        <form method="post" th:action="@{/storage}" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="input-field col s12 m4">
+                                    <select id="estados" name="estados" required>
+                                        <option disabled selected>Estado</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-field  col s12 m4">
+                                    <select id="cidades" name="cidades" required>
+                                        <option disabled selected>Cidade</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-field col s12 m4">
+                                    <select id="cultura" name="cultura" required>
+                                        <option disabled selected value="0">Planta</option>
+                                        <option th:each="cultura : ${culturas}" th:value="${cultura.nome}" th:text="${cultura.nome}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="input-field row">
+                                <input type="text" id="titulo" name="titulo" required>
+                                <label for="titulo">Título</label>
+                            </div>
+                            <div class="row">
+                                <div class="input-field">
+                                    <textarea id="descricao" name="descricao" class="materialize-textarea" required></textarea>
+                                    <label for="descricao" class='active'>Descrição do problema</label>
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <label>Selecione até 6 fotos</label>
+                                <div class = "file-field input-field">
+                                    <div class = "btn blue-grey">
+                                        <span>Procurar</span>
+                                        <input class="input" type="file" id="fotos" name="fotos" accept="image/*" multiple>
+                                    </div>
+                                    <div class = "file-path-wrapper">
+                                        <input class = "file-path validate" type = "text"
+                                               placeholder = "arquivos" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Sessão de Botões de controle-->
+                            <div class="section row">
+                                <div class="btn-block center">
+                                    <div class="input-field col s12 m4 l4">
+                                        <input class="input btn btn-large btn-width-model red modal-close" type="reset" href="home/principal" value="CANCELAR">
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+                                        <input class="input btn btn-large btn-width-model orange" id="limpar" type="reset" value="LIMPAR">
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+                                        <input class="input btn btn-large btn-width-model green" type="submit" id="btnCadastrar" value="CADASTRAR">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+            </section>
+        </div>
+        <script type="text/javascript" th:src="@{/scripts/jquery.js}" src="../../static/scripts/jquery.js"></script>
+        <script type="text/javascript" th:src="@{/scripts/solicitacao.js}" src="../../static/scripts/solicitacao.js"></script>
+    </div>
+</div>

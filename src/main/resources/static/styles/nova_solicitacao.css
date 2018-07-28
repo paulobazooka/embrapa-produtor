@@ -1,0 +1,27 @@
+.wallpaper {
+    background-image: url("../images/trigo3.jpeg");
+    background-size: auto;
+    height: 800px;
+}
+
+#menu{
+    background: linear-gradient(to top, #66BB6A , #0f9d58);
+}
+
+#submenu{
+    background: linear-gradient(to top, #66BB6A , #0f9d58);
+}
+
+
+footer{
+    background: linear-gradient(to bottom, #66BB6A , #0f9d58);
+    position: relative;
+}
+
+.btn-width-model{
+    width: 100%;
+}
+
+.btn-solicitacao{
+    width: 20%;
+}

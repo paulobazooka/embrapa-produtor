@@ -1,0 +1,120 @@
+<div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="usuario">
+        <div class="row">
+            <section class="section">
+                <div class="col s12">
+                    <div class="col s12 l6">
+                        <div class="card">
+                            <h5 class="green-text card-title center">DADOS</h5>
+                            <form th:action="@{/usuario/alterar}" class="" method="post">
+                                <div class="input-field col s12 container">
+                                    <label for="id">Código:</label>
+                                    <input type="text" th:field="${user.id}" id="id" name="id" disabled>
+                                </div>
+                                <div class="input-field col s12 container">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" th:field="${user.nome}" id="nome" name="nome" disabled>
+                                </div>
+                                <div class="input-field col s12 container">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" th:field="${user.email}" id="email" name="email" disabled>
+                                </div>
+                                <div class="input-field col s12 container">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="text" th:field="${user.telefone}" id="telefone" name="telefone" disabled>
+                                </div>
+                                <div th:if="${atualizado}">
+                                    <label class="orange-text" th:text="${atualizado}"></label>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12 l6 center">
+                                        <button class="btn btn-large orange waves-effect waves-light" type="button" id="botaoAlterar">ALTERAR</button>
+                                    </div>
+                                    <div class="col s12 l6 container">
+                                        <button class="btn btn-large green waves-effect waves-light" type="submit" id="botaoConfirmar" disabled>CONFIRMAR</button>
+                                    </div>
+                                </div>
+                                <div class="row"></div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col s12 l6">
+                        <div class="card">
+                            <h5 class="green-text card-title center">ALTERAR SENHA</h5>
+                            <form th:action="@{/usuario}" method="post">
+                                <div class="input-field">
+                                    <label for="senha">Nova Senha</label>
+                                    <input type="password" id="senha" name="senha" disabled>
+                                </div>
+                                <div class="input-field">
+                                    <label for="confirma" id="senhalabel" name="senhalabel">Digite Novamente</label>
+                                    <input type="password" id="confirma" name="confirma" disabled>
+                                </div>
+                                <div th:if="${senha}">
+                                    <label th:text="${senha}" class="orange-text"></label>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 l6 center">
+                                        <button type="button" class="btn btn-large orange" id="botaoAlterarSenha">ALTERAR</button>
+                                    </div>
+                                    <div class="col s12 l6 center">
+                                        <button type="submit" class="btn btn-large green" id="botaoConfirmarSenha" disabled>CONFIRMAR</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h5></h5>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col s12 l6">
+                        <div class="card">
+                            <h5 class="red-text card-title center">APAGAR CONTA</h5>
+                            <fieldset class="input-field"><legend class="red-text">Leia com atenção</legend>
+                                <div class="section">
+                                    <h6 class="title red-text darken-3 center">ATENÇÃO!!!</h6>
+                                    <p class="green-text center">Essa operação não proverá mais o acesso
+                                    ao sistema novamente.</p>
+                                    <div class="green-text center">
+                                        <p>Deseja cancelar a sua conta?</p>
+                                        <a class="btn btn-large red modal-trigger" href="#cancelar">APAGAR</a>
+                                        <div class="row"></div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="modal card col s12 l4 center" id="cancelar">
+            <h5 class="red-text card-title">ATENÇÃO</h5>
+            <div class="center green-text">
+                <div class="center">
+                    <p>Você tem certeza que deseja cancelar sua conta?</p>
+                </div>
+                <div class="row">
+                    <form th:action="@{/usuario/apagar}" method="post">
+                        <div class="row">
+                            <label> <input type="checkbox" id="opcao"/>
+                                <span>Eu li e entendo</span>
+                            </label>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <button class="btn btn-large red" type="submit" id="botaoApagar" disabled>APAGAR CONTA</button>
+                            <button class="btn btn-large green modal-close" type="button">CANCELAR</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" th:src="@{/scripts/jquery.js}" src="../../static/scripts/jquery.js"></script>
+        <script type="text/javascript" th:src="@{/scripts/usuario.js}" src="../../static/scripts/usuario.js"></script>
+    </div>
+</div>

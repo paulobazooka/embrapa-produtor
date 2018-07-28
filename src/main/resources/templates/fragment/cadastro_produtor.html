@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt=br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Embrapa Produtor</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/materialize/css/materialize.min.css}" href="../../static/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link th:href="@{/styles/modelo.css}" href="../../static/styles/modelo.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!--  <link th:href="@{/styles/style.css}"  href="../../static/styles/style.css"  type="text/css" rel="stylesheet" media="screen,projection"/> -->
+</head>
+
+<body>
+<div class="wallpaper row">
+
+    <!-- INICIO DO CABEÇALHO -->
+    <header>
+        <nav id="menu">
+            <div class="nav-wrapper container">
+                <div>
+                    <img th:src="@{/images/embrapa-logo-menu.png}"src="../../static/images/embrapa-logo-menu.png" class="left responsive-img">
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons right">menu</i></a>
+                </div>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#">EMBRAPA</a></li>
+                    <li><a href="#">IFSP</a></li>
+                    <li><a href="#">SOBRE</a></li>
+                </ul>
+            </div>
+        </nav>
+        <ul class="sidenav" id="mobile-demo">
+            <li><a href="#">EMBRAPA</a></li>
+            <li><a href="#">IFSP</a></li>
+            <li><a href="#">SOBRE</a></li>
+        </ul>
+    </header>
+    <!-- FIM DO CABEÇALHO -->
+
+
+
+
+    <!-- CADASTRO DE PRODUTOR -->
+    <section class="row container">
+        <div class="card col s12 m12 l6">
+
+            <form method="post" action="#" th:action="@{/produtor/cadastrar-novo-produtor}"
+                  class="login-form container" th:object="${usuario}">
+
+                <div class="row input-field">
+                    <i class="mdi-social-person-outline prefix material-icons">person</i>
+                    <input type="text" th:field="*{nome}" required>
+                    <label>Nome</label>
+                </div>
+                <div class="row input-field">
+                    <i class="mdi-social-person-outline prefix material-icons">email</i>
+                    <input class="materialize-textarea validate" type="email" th:field="*{email}" required>
+                    <label>e-mail</label>
+                    <span class="helper-text" data-error="e-mail invalido" data-success="e-mail valido"></span>
+                </div>
+                <div class="row input-field">
+                    <i class="mdi-social-person-outline prefix material-icons">phone</i>
+                    <input class="materialize-textarea" type="tel" th:field="*{phone}" required>
+                    <label>telefone</label>
+                </div>
+                <div class="row input-field">
+                    <i class="mdi-action-person-outline prefix material-icons">lock_outline</i>
+                    <input class="materialize-textarea" type="password" th:field="*{password}" required>
+                    <label>senha</label>
+                </div>
+
+                <div class="row">
+                    <div class="col s6 m6 l6 center">
+                        <div class="input-field">
+                            <input type="reset" class="btn btn-large white-text orange waves-effect waves-light" value="LIMPAR">
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6 center">
+                        <div class="input-field">
+                            <input type="submit" class="btn btn-large white-text green waves-effect waves-light" value="CADASTRAR">
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            </form>
+        </div>
+    </section>
+    <!-- FIM DO CADASTRO DE PRODUTOR -->
+
+
+    <!-- INICIO DO FOOTER-->
+    <footer class="page-footer">
+        <p class="title center">Trabalho de Conclusão de Curso</p>
+        <div class="footer-copyright">
+            <div class="container">
+                    <span>
+                      Copyright ©
+                      <script type="text/javascript">
+                          var dt = new Date();
+                          document.write(dt.getFullYear());
+                      </script>
+                      <span class="right hide-on-small-only">
+                          Desenvolvido por Paulo Sérgio do Nascimento
+                      </span>
+                    </span>
+            </div>
+        </div>
+    </footer>
+    <!-- FIM DO FOOTER -->
+
+</div>
+<!-- FIM DO WALLPAPER-->
+
+
+
+
+<!-- ================================================
+SCRIPTS
+================================================ -->
+<!-- jQuery Library -->
+<script type="text/javascript" th:src="@{/scripts/jquery.js}" src="../../static/scripts/jquery.js"></script>
+<!--materialize js-->
+<script type="text/javascript" th:src="@{/materialize/js/materialize.min.js}" src="../../static/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" th:src="@{/scripts/init.js}" src="../../static/scripts/init.js"></script>
+</body>
+</html>

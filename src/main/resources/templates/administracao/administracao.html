@@ -1,0 +1,21 @@
+<div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div th:fragment="administracao">
+        <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
+            <section class="section">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="col s12">
+                            <a href="#" class="btn-large btn-block green">Cadastrar Administrador</a>
+                        </div>
+                        <div class="col s12">
+                            <a href="#" class="btn-large btn-block orange">Cadastrar Pesquisador</a>
+                        </div>
+                        <div class="col s12">
+                            <a href="#" class="btn-large btn-block red">Cadastrar Produtor</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
