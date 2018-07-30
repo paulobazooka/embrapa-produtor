@@ -55,7 +55,6 @@ public class ServerInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments applicationArguments){
 
-        //  this.enviarEmailTeste();
         this.persistirRoles();
         this.persistirTiposCulturas();
         this.persistirCultura();
@@ -216,7 +215,7 @@ public class ServerInitializer implements ApplicationRunner {
 
         List<Cultura> culturas = new ArrayList<>();
 
-        if(culturaService.buscarCulturaPorNome("Outro") == null) {
+        if(culturaService.buscarCulturaPorNome("Outra") == null) {
             Cultura outra = new Cultura("Outra", "Outra", tipoCulturaService.buscarTipoCulturaPorTipo("Outra"));
             culturas.add(outra);
         }
