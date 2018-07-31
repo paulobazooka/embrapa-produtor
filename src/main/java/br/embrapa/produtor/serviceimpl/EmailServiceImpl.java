@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailServiceImpl implements EmailService {
 
+
     @Autowired
     JavaMailSender javaMailSender;
-
 
     @Override
     public boolean enviarEmail(Mensagem mensagem, String destinatario) {
@@ -24,8 +24,12 @@ public class EmailServiceImpl implements EmailService {
         mail.setSubject(mensagem.getTitulo());
         mail.setText(mensagem.getCorpo());
 
-        javaMailSender.send(mail);
+        try {
+            javaMailSender.send(mail);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
 
-        return true;
     }
 }
