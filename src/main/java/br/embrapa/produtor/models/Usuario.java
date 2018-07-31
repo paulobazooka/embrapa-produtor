@@ -24,10 +24,9 @@ public class Usuario extends Abstract implements UserDetails {
     private LocalDateTime data_remocao;
     private String tipo;
     private boolean ativo;
-    private boolean requisitou_nova_senha;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
-
 
     public Usuario() {
     }
@@ -101,15 +100,6 @@ public class Usuario extends Abstract implements UserDetails {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    @Column(insertable = false)
-    public boolean isRequisitou_nova_senha() {
-        return requisitou_nova_senha;
-    }
-
-    public void setRequisitou_nova_senha(boolean requisitou_nova_senha) {
-        this.requisitou_nova_senha = requisitou_nova_senha;
     }
 
     public List<Role> getRoles() {

@@ -1,16 +1,32 @@
 package br.embrapa.produtor.auxiliar;
 
+import br.embrapa.produtor.EmbrapaProdutorApplication;
 import br.embrapa.produtor.constants.Modulo;
 import br.embrapa.produtor.constants.TipoUsuario;
+import br.embrapa.produtor.email.GmailQuickstart;
 import br.embrapa.produtor.models.*;
 import br.embrapa.produtor.serviceimpl.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.system.ApplicationHome;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+import sun.applet.Main;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +37,7 @@ import java.util.List;
  *  Classe auxiliar para inicializar com persistência de dados
  *
  * */
+
 @Component
 public class ServerInitializer implements ApplicationRunner {
 
@@ -51,17 +68,23 @@ public class ServerInitializer implements ApplicationRunner {
     @Autowired
     ComentarioServiceImplements comentarioService;
 
+    @Autowired
+    AmazonS3Client amazonS3Client;
+
+    @Autowired
+    EmailServiceImpl emailService;
 
     @Override
     public void run(ApplicationArguments applicationArguments){
 
-        this.persistirRoles();
+        this.enviarEmailTeste();
+       /* this.persistirRoles();
         this.persistirTiposCulturas();
         this.persistirCultura();
         this.persistirDoencaCultura();
         this.persistirUsuarioAdministrador();
         this.persistirUsuarioProdutor();
-        this.persistirUsuarioPesquisador();
+        this.persistirUsuarioPesquisador();*/
 
     }
 
@@ -90,115 +113,115 @@ public class ServerInitializer implements ApplicationRunner {
 
         List<TipoCultura> tipoCulturas = new ArrayList<>();
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Outra") == null){
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Outra") == null) {
             TipoCultura outra = new TipoCultura();
             outra.setTipo("Outra");
             tipoCulturas.add(outra);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Grão") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Grão") == null) {
             TipoCultura grao = new TipoCultura();
             grao.setTipo("Grão");
             tipoCulturas.add(grao);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Rutácea") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Rutácea") == null) {
             TipoCultura rutacea = new TipoCultura();
             rutacea.setTipo("Rutácea");
             tipoCulturas.add(rutacea);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Malvaceae") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Malvaceae") == null) {
             TipoCultura malvacea = new TipoCultura();
             malvacea.setTipo("Malvaceae");
             tipoCulturas.add(malvacea);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Tubérculo") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Tubérculo") == null) {
             TipoCultura tuberculo = new TipoCultura();
             tuberculo.setTipo("Tubérculo");
             tipoCulturas.add(tuberculo);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Legume") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Legume") == null) {
             TipoCultura legume = new TipoCultura();
             legume.setTipo("Legume");
             tipoCulturas.add(legume);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Legume Seco") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Legume Seco") == null) {
             TipoCultura legseco = new TipoCultura();
             legseco.setTipo("Legume Seco");
             tipoCulturas.add(legseco);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Legume de Folha") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Legume de Folha") == null) {
             TipoCultura legufolha = new TipoCultura();
             legufolha.setTipo("Legume de Folha");
             tipoCulturas.add(legufolha);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Legume de Fruto") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Legume de Fruto") == null) {
             TipoCultura legfruto = new TipoCultura();
             legfruto.setTipo("Legume de Fruto");
             tipoCulturas.add(legfruto);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Planta Oleaginosa") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Planta Oleaginosa") == null) {
             TipoCultura oleaginosas = new TipoCultura();
             oleaginosas.setTipo("Planta Oleaginosa");
             tipoCulturas.add(oleaginosas);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Erva") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Erva") == null) {
             TipoCultura erva = new TipoCultura();
             erva.setTipo("Erva");
             tipoCulturas.add(erva);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Especiarias") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Especiarias") == null) {
             TipoCultura especiaria = new TipoCultura();
             especiaria.setTipo("Especiarias");
             tipoCulturas.add(especiaria);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Planta Medicinal") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Planta Medicinal") == null) {
             TipoCultura medicinal = new TipoCultura();
             medicinal.setTipo("Planta Medicinal");
             tipoCulturas.add(medicinal);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Árvore de Fruto") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Árvore de Fruto") == null) {
             TipoCultura arvfruto = new TipoCultura();
             arvfruto.setTipo("Árvore de Fruto");
             tipoCulturas.add(arvfruto);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Árvore de Fruto Seco") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Árvore de Fruto Seco") == null) {
             TipoCultura arvfrutoseco = new TipoCultura();
             arvfrutoseco.setTipo("Árvore de Fruto Seco");
             tipoCulturas.add(arvfrutoseco);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Árvore") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Árvore") == null) {
             TipoCultura arvore = new TipoCultura();
             arvore.setTipo("Árvore");
             tipoCulturas.add(arvore);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Planta de Forragem") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Planta de Forragem") == null) {
             TipoCultura forragem = new TipoCultura();
             forragem.setTipo("Planta de Forragem");
             tipoCulturas.add(forragem);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Composto") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Composto") == null) {
             TipoCultura composto = new TipoCultura();
             composto.setTipo("Composto");
             tipoCulturas.add(composto);
         }
 
-        if(tipoCulturaService.buscarTipoCulturaPorTipo("Conservação do Solo") == null) {
+        if (tipoCulturaService.buscarTipoCulturaPorTipo("Conservação do Solo") == null) {
             TipoCultura conservacao = new TipoCultura();
             conservacao.setTipo("Conservação do Solo");
             tipoCulturas.add(conservacao);
@@ -209,110 +232,149 @@ public class ServerInitializer implements ApplicationRunner {
                 tipoCulturaService.cadastrarTipoCultura(tipo);
             }
         }
+
     }
 
     protected void persistirCultura() {
 
         List<Cultura> culturas = new ArrayList<>();
 
-        if(culturaService.buscarCulturaPorNome("Outra") == null) {
-            Cultura outra = new Cultura("Outra", "Outra", tipoCulturaService.buscarTipoCulturaPorTipo("Outra"));
-            culturas.add(outra);
+        if (culturaService.buscarCulturaPorNome("Outra") == null) {
+            culturas.add(new Cultura("Outra", "Outra", tipoCulturaService.buscarTipoCulturaPorTipo("Outra")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Laranja Pêra") == null) {
-            Cultura laranja = new Cultura("Laranja Pêra", "Citrus sinensis L. Osbeck", tipoCulturaService.buscarTipoCulturaPorTipo("Rutácea"));
-            culturas.add(laranja);
+        if (culturaService.buscarCulturaPorNome("Laranja Pêra") == null) {
+            culturas.add(new Cultura("Laranja Pêra", "Citrus sinensis L. Osbeck", tipoCulturaService.buscarTipoCulturaPorTipo("Rutácea")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Milho") == null) {
-            Cultura milho = new Cultura("Milho", "Zea mays", tipoCulturaService.buscarTipoCulturaPorTipo("Grão"));
-            culturas.add(milho);
+        if (culturaService.buscarCulturaPorNome("Milho") == null) {
+            culturas.add(new Cultura("Milho", "Zea mays", tipoCulturaService.buscarTipoCulturaPorTipo("Grão")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Batata") == null) {
-            Cultura batata = new Cultura("Batata", "Solanum tuberosum", tipoCulturaService.buscarTipoCulturaPorTipo("Tubérculo"));
-            culturas.add(batata);
+        if (culturaService.buscarCulturaPorNome("Batata") == null) {
+            culturas.add(new Cultura("Batata", "Solanum tuberosum", tipoCulturaService.buscarTipoCulturaPorTipo("Tubérculo")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Banana Nanica") == null) {
-            Cultura bananaNanica = new Cultura("Banana Nanica", "Musa acuminata", tipoCulturaService.buscarTipoCulturaPorTipo("Erva"));
-            culturas.add(bananaNanica);
+        if (culturaService.buscarCulturaPorNome("Banana Nanica") == null) {
+            culturas.add(new Cultura("Banana Nanica", "Musa acuminata", tipoCulturaService.buscarTipoCulturaPorTipo("Erva")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Feijão Carioca") == null) {
-            Cultura feijãoComum = new Cultura("Feijão Carioca", "Phaseolus vulgaris", tipoCulturaService.buscarTipoCulturaPorTipo("Legume Seco"));
-            culturas.add(feijãoComum);
+        if (culturaService.buscarCulturaPorNome("Feijão Carioca") == null) {
+            culturas.add(new Cultura("Feijão Carioca", "Phaseolus vulgaris", tipoCulturaService.buscarTipoCulturaPorTipo("Legume Seco")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Eucalipto") == null) {
-            Cultura eucalipto = new Cultura("Eucalipto", "Eucalyptus globulus", tipoCulturaService.buscarTipoCulturaPorTipo("Árvore"));
-            culturas.add(eucalipto);
+        if (culturaService.buscarCulturaPorNome("Eucalipto") == null) {
+            culturas.add(new Cultura("Eucalipto", "Eucalyptus globulus", tipoCulturaService.buscarTipoCulturaPorTipo("Árvore")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Cana de Açúcar") == null) {
-            Cultura cana = new Cultura("Cana de Açúcar", "Saccharum officinarum L.", tipoCulturaService.buscarTipoCulturaPorTipo("Erva"));
-            culturas.add(cana);
+        if (culturaService.buscarCulturaPorNome("Cana de Açúcar") == null){
+            culturas.add(new Cultura("Cana de Açúcar", "Saccharum officinarum L.", tipoCulturaService.buscarTipoCulturaPorTipo("Erva")));
         }
 
-        if(culturaService.buscarCulturaPorNome("Algodão") == null) {
-            Cultura algodao = new Cultura("Algodão", "Gossypium hirsutum", tipoCulturaService.buscarTipoCulturaPorTipo("Malvaceae"));
-            culturas.add(algodao);
+        if (culturaService.buscarCulturaPorNome("Algodão") == null) {
+            culturas.add(new Cultura("Algodão", "Gossypium hirsutum", tipoCulturaService.buscarTipoCulturaPorTipo("Malvaceae")));
         }
 
-
-        if(!culturas.isEmpty()) {
+        if (!culturas.isEmpty()) {
             for (Cultura planta : culturas) {
                 culturaService.cadastrarCultura(planta);
             }
         }
+
     }
 
     protected void persistirDoencaCultura(){
 
-        List<DoencaCultura> doencaLaranja = new ArrayList<>();
+        // Doenças da Laranja
         Cultura laranja = culturaService.buscarCulturaPorNome("Laranja Pêra");
+        List<DoencaCultura> doencaLaranja = new ArrayList<>();
 
-        if(laranja != null) {
-            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Cancro Cítrico", "Xanthomonas citri subsp. citri")));
-            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Antracnose", "Colletotrichum truncatum")));
-            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Bolor Verde", "Penicillium digitatum")));
-            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Clorose Variegada dos Citros", "Xylella fastidiosa")));
+        if (doencaCulturaService.buscarDoencaCultura("Cancro Cítrico") == null) {
+            DoencaCultura cancrocitrico = new DoencaCultura("Cancro Cítrico", "Xanthomonas citri subsp. citri");
+            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(cancrocitrico));
+        }
 
+        if (doencaCulturaService.buscarDoencaCultura("Antracnose") == null) {
+            DoencaCultura antracnose = new DoencaCultura("Antracnose", "Colletotrichum truncatum");
+            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(antracnose));
+        }
+
+        if (doencaCulturaService.buscarDoencaCultura("Bolor Verde") == null) {
+            DoencaCultura bolorverde = new DoencaCultura("Bolor Verde", "Penicillium digitatum");
+            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(bolorverde));
+        }
+
+        if (doencaCulturaService.buscarDoencaCultura("Clorose Variegada dos Citros") == null) {
+            DoencaCultura clorose = new DoencaCultura("Clorose Variegada dos Citros", "Xylella fastidiosa");
+            doencaLaranja.add(doencaCulturaService.cadastrarDoencacultura(clorose));
+        }
+
+        if (!doencaLaranja.isEmpty()) {
             laranja.setDoencas(doencaLaranja);
             culturaService.atualizarCultura(laranja);
         }
 
 
-
+        // Doenças do Milho
         List<DoencaCultura> doencaMilho = new ArrayList<>();
         Cultura milho = culturaService.buscarCulturaPorNome("Milho");
 
-        if(milho != null) {
-            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Cercosporiose", "Cercospora zea-maydis")));
-            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura(" Ferrugem Polissora ", "Puccinia polysora")));
-            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Ferrugem Tropical", "Physopella zeae")));
-            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Ferrugem Comum", "Puccinia sorghi")));
-            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Helmintosporiose", "Exserohilumturcicum")));
+        if (doencaCulturaService.buscarDoencaCultura("Cercosporiose") == null) {
+            DoencaCultura cercosporiose = new DoencaCultura("Cercosporiose", "Cercospora zea-maydis ");
+            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(cercosporiose));
+        }
 
+        if (doencaCulturaService.buscarDoencaCultura("Ferrugem Polissora") == null) {
+            DoencaCultura ferrugem = new DoencaCultura("Ferrugem Polissora", "Puccinia polysora");
+            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(ferrugem));
+        }
+
+        if (doencaCulturaService.buscarDoencaCultura("Ferrugem Tropical") == null) {
+            DoencaCultura ferTropical = new DoencaCultura("Ferrugem Tropical", "Physopella zeae");
+            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(ferTropical));
+        }
+
+        if (doencaCulturaService.buscarDoencaCultura("Ferrugem Comum") == null) {
+            DoencaCultura ferComum = new DoencaCultura("Ferrugem Comum", "Puccinia sorghi");
+            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(ferComum));
+        }
+
+        if (doencaCulturaService.buscarDoencaCultura("Helmintosporiose") == null) {
+            DoencaCultura helmin = new DoencaCultura("Helmintosporiose", "Exserohilumturcicum");
+            doencaMilho.add(doencaCulturaService.cadastrarDoencacultura(helmin));
+        }
+
+        if (!doencaMilho.isEmpty()) {
             milho.setDoencas(doencaMilho);
             culturaService.atualizarCultura(milho);
         }
 
 
-
+        // Doenças da Batata
         List<DoencaCultura> doencaBatata = new ArrayList<>();
         Cultura batata = culturaService.buscarCulturaPorNome("Batata");
 
-        if(batata != null) {
+        if (doencaCulturaService.buscarDoencaCultura("Pinta Preta") == null) {
             doencaBatata.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Pinta Preta", "Alternaria grandis")));
-            doencaBatata.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Requeima", "Phytophthora infestans")));
-            doencaBatata.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Rizoctoniose", "Rhizoctonia solani")));
-            doencaBatata.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Sarna Prateada", "Helminthosporium solani")));
+        }
 
+        if (doencaCulturaService.buscarDoencaCultura("Requeima") == null) {
+            doencaBatata.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Requeima", "Phytophthora infestans")));
+        }
+
+        if (doencaCulturaService.buscarDoencaCultura("Rizoctoniose") == null) {
+            doencaBatata.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Rizoctoniose", "Rhizoctonia solani")));
+        }
+
+        if (doencaCulturaService.buscarDoencaCultura("Sarna Prateada") == null) {
+            doencaBatata.add(doencaCulturaService.cadastrarDoencacultura(new DoencaCultura("Sarna Prateada", "Helminthosporium solani")));
+        }
+
+        if (!doencaBatata.isEmpty()) {
             batata.setDoencas(doencaBatata);
             culturaService.atualizarCultura(batata);
         }
+
     }
 
     protected void persistirUsuarioAdministrador() {
@@ -327,7 +389,7 @@ public class ServerInitializer implements ApplicationRunner {
             roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_ADMIN.name()));
 
             admin = new Usuario();
-            admin.setNome("Administrador Padrão");
+            admin.setNome("Administrador");
             admin.setEmail("admin@ifsp");
             admin.setSenha(new BCryptPasswordEncoder().encode("ifsp"));
             admin.setData_cadastro(LocalDateTime.now());
@@ -349,7 +411,7 @@ public class ServerInitializer implements ApplicationRunner {
             roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PRODUTOR.name()));
 
             produtor = new Usuario();
-            produtor.setNome("Produtor Teste");
+            produtor.setNome("Produtor");
             produtor.setEmail("prod@ifsp");
             produtor.setSenha(new BCryptPasswordEncoder().encode("123"));
             produtor.setData_cadastro(LocalDateTime.now());
@@ -358,7 +420,32 @@ public class ServerInitializer implements ApplicationRunner {
             produtor.setTelefone("987654321");
             produtor.setRoles(roles);
 
-            usuarioService.persistir(produtor);
+          /*  for (int i = 0; i < 1; i++) {
+                Cultura laranja = culturaService.buscarCulturaPorNome("Laranja Pêra");
+
+                Foto foto1 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto1.jpg");
+                Foto foto2 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto2.jpg");
+                Foto foto3 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto3.jpg");
+                Foto foto4 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto4.jpg");
+                Foto foto5 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto5.jpg");
+
+                Solicitacao solicitacao = new Solicitacao();
+                solicitacao.setCidade("Campinas");
+                solicitacao.setEstado("São Paulo");
+                solicitacao.setData_requisicao(LocalDateTime.now());
+                solicitacao.setTitulo("Pés de Laranja com folhas queimadas");
+                solicitacao.setDescricao("Percebi no dia de hoje que algumas plantas apresentaram sinais de queimadura, como se fosse uma fuligem escura.");
+                solicitacao.setCultura(laranja);
+
+                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto1));
+                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto2));
+                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto3));
+                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto4));
+                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto5));
+
+                solicitacao.setProdutor(usuarioService.persistir(produtor));
+                solicitacaoService.cadastrarSolicitacao(solicitacao);
+            }*/
         }
     }
 
@@ -385,4 +472,26 @@ public class ServerInitializer implements ApplicationRunner {
         }
     }
 
+    protected void enviarEmailTeste(){
+
+        Mensagem mensagem = new Mensagem();
+        mensagem.setRemetente("embrapaprodutor@gmail.com");
+        mensagem.setTitulo("TESTE");
+        mensagem.setCorpo("siajdbasildbaldibasildbaslidbasildb asljdb ilasdblai sdblasbdklsb");
+
+        emailService.enviarEmail(mensagem, "psn.ads.ifsp@gmail.com");
+/*
+        GmailQuickstart gmailQuickstart = new GmailQuickstart();
+
+        try {
+            gmailQuickstart.test();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
+
+    }
 }
