@@ -1,14 +1,23 @@
 package br.embrapa.produtor.models;
 
+/**
+ *
+ */
 public class Mensagem {
-
+    /**
+     *
+     */
     private String titulo;
     private String corpo;
     private String remetente;
 
-    public Mensagem() {
-    }
 
+    /**
+     *
+     * @param titulo titulo da mensagem a ser enviada
+     * @param corpo texto da mensagem a ser enviada
+     * @param remetente remetente da mensagem a ser enviada
+     */
     public Mensagem(String titulo, String corpo, String remetente) {
         this.titulo = titulo;
         this.corpo = corpo;

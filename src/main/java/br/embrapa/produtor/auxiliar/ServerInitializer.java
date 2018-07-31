@@ -1,32 +1,15 @@
 package br.embrapa.produtor.auxiliar;
 
-import br.embrapa.produtor.EmbrapaProdutorApplication;
 import br.embrapa.produtor.constants.Modulo;
 import br.embrapa.produtor.constants.TipoUsuario;
-import br.embrapa.produtor.email.GmailQuickstart;
 import br.embrapa.produtor.models.*;
 import br.embrapa.produtor.serviceimpl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.system.ApplicationHome;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-import sun.applet.Main;
 
-import java.io.*;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,13 +61,13 @@ public class ServerInitializer implements ApplicationRunner {
     public void run(ApplicationArguments applicationArguments){
 
         this.enviarEmailTeste();
-       /* this.persistirRoles();
+        this.persistirRoles();
         this.persistirTiposCulturas();
         this.persistirCultura();
         this.persistirDoencaCultura();
         this.persistirUsuarioAdministrador();
         this.persistirUsuarioProdutor();
-        this.persistirUsuarioPesquisador();*/
+        this.persistirUsuarioPesquisador();
 
     }
 
@@ -474,24 +457,8 @@ public class ServerInitializer implements ApplicationRunner {
 
     protected void enviarEmailTeste(){
 
-        Mensagem mensagem = new Mensagem();
-        mensagem.setRemetente("embrapaprodutor@gmail.com");
-        mensagem.setTitulo("TESTE");
-        mensagem.setCorpo("siajdbasildbaldibasildbaslidbasildb asljdb ilasdblai sdblasbdklsb");
-
+        Mensagem mensagem = new Mensagem("e-mail de teste", "A aplicação está iniciando a operação de deploy!","No-Replay");
         emailService.enviarEmail(mensagem, "psn.ads.ifsp@gmail.com");
-/*
-        GmailQuickstart gmailQuickstart = new GmailQuickstart();
-
-        try {
-            gmailQuickstart.test();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-
 
     }
 }
