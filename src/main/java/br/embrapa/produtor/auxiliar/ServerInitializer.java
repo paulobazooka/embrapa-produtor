@@ -61,13 +61,13 @@ public class ServerInitializer implements ApplicationRunner {
     public void run(ApplicationArguments applicationArguments){
 
         this.enviarEmailTeste();
-        this.persistirRoles();
+      /*  this.persistirRoles();
         this.persistirTiposCulturas();
         this.persistirCultura();
         this.persistirDoencaCultura();
         this.persistirUsuarioAdministrador();
         this.persistirUsuarioProdutor();
-        this.persistirUsuarioPesquisador();
+        this.persistirUsuarioPesquisador();*/
 
     }
 
@@ -403,32 +403,7 @@ public class ServerInitializer implements ApplicationRunner {
             produtor.setTelefone("987654321");
             produtor.setRoles(roles);
 
-          /*  for (int i = 0; i < 1; i++) {
-                Cultura laranja = culturaService.buscarCulturaPorNome("Laranja Pêra");
-
-                Foto foto1 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto1.jpg");
-                Foto foto2 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto2.jpg");
-                Foto foto3 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto3.jpg");
-                Foto foto4 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto4.jpg");
-                Foto foto5 = new Foto("/home/paulo/Documentos/TCC 2018/codes/project/embrapa/src/fotos-laranja/foto5.jpg");
-
-                Solicitacao solicitacao = new Solicitacao();
-                solicitacao.setCidade("Campinas");
-                solicitacao.setEstado("São Paulo");
-                solicitacao.setData_requisicao(LocalDateTime.now());
-                solicitacao.setTitulo("Pés de Laranja com folhas queimadas");
-                solicitacao.setDescricao("Percebi no dia de hoje que algumas plantas apresentaram sinais de queimadura, como se fosse uma fuligem escura.");
-                solicitacao.setCultura(laranja);
-
-                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto1));
-                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto2));
-                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto3));
-                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto4));
-                solicitacao.getFotos().add(fotoService.cadastrarFoto(foto5));
-
-                solicitacao.setProdutor(usuarioService.persistir(produtor));
-                solicitacaoService.cadastrarSolicitacao(solicitacao);
-            }*/
+            usuarioService.persistir(produtor);
         }
     }
 
@@ -456,7 +431,6 @@ public class ServerInitializer implements ApplicationRunner {
     }
 
     protected void enviarEmailTeste(){
-
         Mensagem mensagem = new Mensagem("e-mail de teste", "A aplicação está iniciando a operação de deploy!","No-Replay");
         emailService.enviarEmail(mensagem, "psn.ads.ifsp@gmail.com");
 
