@@ -54,20 +54,17 @@ public class ServerInitializer implements ApplicationRunner {
     @Autowired
     AmazonS3Client amazonS3Client;
 
-    @Autowired
-    EmailServiceImpl emailService;
 
     @Override
     public void run(ApplicationArguments applicationArguments){
 
-        this.enviarEmailTeste();
         this.persistirRoles();
         this.persistirUsuarioAdministrador();
         this.persistirUsuarioProdutor();
         this.persistirUsuarioPesquisador();
-       /* this.persistirTiposCulturas();
+        this.persistirTiposCulturas();
         this.persistirCultura();
-        this.persistirDoencaCultura();*/
+        this.persistirDoencaCultura();
     }
 
     protected void persistirRoles() {
@@ -429,9 +426,4 @@ public class ServerInitializer implements ApplicationRunner {
         }
     }
 
-    protected void enviarEmailTeste(){
-        Mensagem mensagem = new Mensagem("e-mail de teste", "A aplicação está iniciando a operação de deploy!","No-Replay");
-        emailService.enviarEmail(mensagem, "psn.ads.ifsp@gmail.com");
-
-    }
 }
