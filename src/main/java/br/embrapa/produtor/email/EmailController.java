@@ -15,7 +15,6 @@ public class EmailController {
     @Autowired
     EmailServiceImpl emailService;
 
-
     @GetMapping
     public String envioEmail(){
 
