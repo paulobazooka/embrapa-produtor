@@ -61,14 +61,13 @@ public class ServerInitializer implements ApplicationRunner {
     public void run(ApplicationArguments applicationArguments){
 
         this.enviarEmailTeste();
-      /*  this.persistirRoles();
-        this.persistirTiposCulturas();
-        this.persistirCultura();
-        this.persistirDoencaCultura();
+        this.persistirRoles();
         this.persistirUsuarioAdministrador();
         this.persistirUsuarioProdutor();
-        this.persistirUsuarioPesquisador();*/
-
+        this.persistirUsuarioPesquisador();
+       /* this.persistirTiposCulturas();
+        this.persistirCultura();
+        this.persistirDoencaCultura();*/
     }
 
     protected void persistirRoles() {
