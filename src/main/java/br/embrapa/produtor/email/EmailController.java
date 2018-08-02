@@ -17,10 +17,12 @@ public class EmailController {
 
     @GetMapping
     public String envioEmail(){
-
         Mensagem mensagem = new Mensagem("e-mail de Teste","envio de mensagem de teste de acordo com o controller", "No-Reply");
-        emailService.enviarEmail(mensagem, "psn.ads.ifsp@gmail.com");
 
-        return "envio de email...";
+        if(emailService.enviarEmail(mensagem, "embrapaprodutor@gmail.com"))
+            return "envio de email de teste...";
+        else
+            return "não foi possível enviar o e-mail de teste";
     }
+
 }

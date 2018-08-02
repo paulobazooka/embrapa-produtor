@@ -85,7 +85,7 @@ public class Usuario extends Abstract implements UserDetails {
         this.data_remocao = data_remocao;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, insertable = false)
     public boolean isAtivo() {
         return ativo;
     }
@@ -137,11 +137,11 @@ public class Usuario extends Abstract implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.ativo;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.ativo;
+        return true;
     }
 }

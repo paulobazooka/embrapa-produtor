@@ -18,7 +18,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     private final static String[] PAGES_PERMITED = {
             "/cadastrar-produtor",
-            "/cadastrar-novo-produtor"
+            "/cadastrar-novo-produtor",
+            "/confirmar-cadastro/*",
+            "/produtor/cadastro"
     };
 
     private final static String[] STATIC_DIR = {
@@ -36,11 +38,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(PAGES_PERMITED).permitAll()
+                .antMatchers(HttpMethod.GET,  PAGES_PERMITED).permitAll()
+                .antMatchers(HttpMethod.POST, PAGES_PERMITED).permitAll()
                 .antMatchers(STATIC_DIR).permitAll()
-                .antMatchers(HttpMethod.GET, "/storage").hasRole("PRODUTOR")
-                .antMatchers(HttpMethod.POST, "/storage").hasRole("PRODUTOR")
                 .anyRequest().authenticated()
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/negado")
                 .and()
                 .formLogin().loginPage(LOGIN_PAGE).permitAll()
                 .and()
@@ -49,11 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .logout().logoutSuccessUrl("/login?logout").permitAll();
     }
 
+
+
     @Override
     public void configure(WebSecurity web) {
         web
                 .ignoring().antMatchers(STATIC_DIR);
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

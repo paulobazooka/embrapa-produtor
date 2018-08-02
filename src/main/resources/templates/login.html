@@ -63,6 +63,9 @@
                             <div class="row center" th:if="${param.error}">
                                 <p class="margin medium-small red-text">Erro de Login!</p>
                             </div>
+                            <div class="row center" th:if="${confirmar}">
+                                <p class="margin medium-small blue-text">Confirme seu cadastro acessando seu e-mail.</p>
+                            </div>
                             <div class="row">
                                 <div class="cols s12">
                                     <div class="input-field">
@@ -119,10 +122,6 @@
 
     </section>
     <!-- FIM DO WALLPAPER-->
-
-
-
-
 
     <script type="text/javascript" th:src="@{/scripts/jquery.js}"                 src="../static/scripts/jquery.js"></script>
     <script type="text/javascript" th:src="@{/materialize/js/materialize.min.js}" src="../static/materialize/js/materialize.min.js"></script>

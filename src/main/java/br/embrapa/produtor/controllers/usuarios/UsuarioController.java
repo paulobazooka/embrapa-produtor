@@ -1,20 +1,15 @@
-package br.embrapa.produtor.controllers;
+package br.embrapa.produtor.controllers.usuarios;
 
 import br.embrapa.produtor.auxiliar.UsuarioUtils;
 import br.embrapa.produtor.models.Usuario;
 import br.embrapa.produtor.serviceimpl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -30,9 +25,7 @@ public class UsuarioController {
 
     @GetMapping
     public ModelAndView buscarUsuario(Principal principal){
-
         ModelAndView mv = retornaModelAndView();
-
         mv.addObject("user", this.retornarUsuario(principal));
 
         return mv;

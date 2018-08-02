@@ -9,7 +9,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * @author Paulo Sérgio do Nascimento
+ *
+ *     Classe responsável por enviar e-mail aos usuários cadastrados
+ *
+ */
 @Service
 public class EmailServiceImpl implements EmailService {
 
@@ -19,6 +24,13 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender mailSender;
 
 
+    /**
+     *
+     * @param mensagem Objeto mensagem que será recebido como parametro
+     * @param destinatario destinatário que receberá a mensagem
+     * @return retorna true se foi enviado o email e false se houve algum erro
+     *
+     */
     @Override
     public boolean enviarEmail(Mensagem mensagem, String destinatario) {
 
@@ -36,7 +48,6 @@ public class EmailServiceImpl implements EmailService {
         } catch (MailException e) {
             System.out.println("ERROR: " + e);
             return false;
-
         }
     }
 }

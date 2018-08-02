@@ -5,6 +5,7 @@ import br.embrapa.produtor.constants.TipoUsuario;
 import br.embrapa.produtor.models.*;
 import br.embrapa.produtor.serviceimpl.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -394,12 +395,13 @@ public class ServerInitializer implements ApplicationRunner {
             produtor.setEmail("prod@ifsp");
             produtor.setSenha(new BCryptPasswordEncoder().encode("123"));
             produtor.setData_cadastro(LocalDateTime.now());
-            produtor.setAtivo(true);
             produtor.setTipo(TipoUsuario.PRODUTOR.name());
             produtor.setTelefone("987654321");
             produtor.setRoles(roles);
-
             usuarioService.persistir(produtor);
+            Usuario novo = usuarioService.buscarPorId(produtor.getId());
+            novo.setAtivo(true);
+            usuarioService.persistir(novo);
         }
     }
 
