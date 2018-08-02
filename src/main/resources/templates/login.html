@@ -92,7 +92,7 @@
                             </div>
                             <div class="row">
                                 <p class="margin medium-small center"><a href="/cadastrar-produtor">Cadastrar</a></p>
-                                <p class="margin medium-small center"><a href="#">Esqueceu a senha?</a></p>
+                                <p class="margin medium-small center"><a class="modal-trigger" href="#esqueciasenha">Esqueceu a senha?</a></p>
                             </div>
                         </form>
                     </div>
@@ -100,7 +100,28 @@
             </div>
         </section>
 
-
+        <div id="esqueciasenha" class="modal">
+            <section class="section container">
+                <h3 class="title green-text center">Recuperar a Senha</h3>
+                <form method="post" th:action="@{/}">
+                    <div class="input-field row">
+                        <input type="email" id="email" name="email">
+                        <label for="email">email</label>
+                    </div>
+                    <!--Sessão de Botões de controle-->
+                    <div class="section row">
+                        <div class="btn-block center">
+                            <div class="input-field col s12 m4 l4">
+                                <input class="input btn btn-large btn-width-model red modal-close" type="reset" href="login" value="CANCELAR">
+                            </div>
+                            <div class="input-field col s12 m4 l4">
+                                <input class="input btn btn-large btn-width-model green" type="submit" id="btnSolicitar" value="SOLICITAR">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
                     <!-- INICIO DO FOOTER-->
                     <footer class="page-footer">
                         <p class="title center">Trabalho de Conclusão de Curso</p>
