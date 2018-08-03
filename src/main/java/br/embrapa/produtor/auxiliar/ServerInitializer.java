@@ -380,7 +380,7 @@ public class ServerInitializer implements ApplicationRunner {
     }
 
     protected void persistirUsuarioProdutor() {
-        Usuario produtor = usuarioService.buscarPorEmail("paulozurzo@gmail.com");
+        Usuario produtor = usuarioService.buscarPorEmail("prod@ifsp");
 
         if (produtor == null) {
 
@@ -389,8 +389,7 @@ public class ServerInitializer implements ApplicationRunner {
 
             produtor = new Usuario();
             produtor.setNome("Produtor");
-            produtor.setEmail("paulozurzo@gmail.com");
-            produtor.setNova_senha(true);
+            produtor.setEmail("prod@ifsp");
             produtor.setSenha(new BCryptPasswordEncoder().encode("123"));
             produtor.setData_cadastro(LocalDateTime.now());
             produtor.setTipo(TipoUsuario.PRODUTOR.name());

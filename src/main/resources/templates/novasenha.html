@@ -57,8 +57,8 @@
                         </div>
                     </div>
                     <form action="#" th:action="@{/usuario/enviar-nova-senha}" method="POST">
-                        <div>
-                            <input type="text" th:value="${id}">
+                        <div class="hide">
+                            <input type="text" th:value="${id}" id="id" name="id">
                         </div>
                         <div class="row">
                             <div class="col s12">

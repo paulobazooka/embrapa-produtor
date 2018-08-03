@@ -72,16 +72,18 @@ public class UsuarioController {
         Usuario user = usuarioService.buscarPorEmail(email);
 
         if (user != null){
+
             String corpo = "Caro " + user.getNome() + ".\n" +
                     "Para cadastrar uma nova senha favor clicar no link abaixo:\n\n" +
-                    Link.LOCAL.getUrl() + Link.NOVA_SENHA.getUrl() + user.getId();
+                    Link.HEROKU.getUrl() + Link.NOVA_SENHA.getUrl() + user.getId();
 
-            Mensagem mensagem = new Mensagem("Solicitação de nova senha",corpo,"Não Responda");
+            Mensagem mensagem = new Mensagem("Solicitação de nova senha",
+                                                corpo,"Não Responda");
+
 
             if (emailService.enviarEmail(mensagem, user.getEmail())){
-                System.out.println("E-mail enviado");
                 user.setNova_senha(true);
-                mv.addObject("email","email");
+                mv.addObject("email", user.getEmail());
             }else{
                 System.out.println("E-mail não enviado");
                 mv.addObject("nemail", "nemail");
@@ -90,6 +92,7 @@ public class UsuarioController {
             System.out.println("Usuário não existe no sistema");
             mv.addObject("nulo", "nulo");
         }
+
 
         return mv;
     }
@@ -115,7 +118,7 @@ public class UsuarioController {
                                       @RequestParam("senha") String senha,
                                       @RequestParam("confirma") String confirma){
 
-        ModelAndView mv = new ModelAndView("novasenha");
+        ModelAndView mv = new ModelAndView("login");
         Usuario user = usuarioService.buscarPorId(id);
 
         if ((user != null) && user.isNova_senha()){
