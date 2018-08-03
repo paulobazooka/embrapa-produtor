@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt=br" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!--================================================================================
+
+================================================================================ -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Embrapa Produtor</title>
+    <link rel="stylesheet"                                  href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/materialize/css/materialize.min.css}" href="../static/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link th:href="@{/styles/login.css}"                   href="../static/styles/login.css"                   type="text/css" rel="stylesheet" media="screen,projection">
+</head>
+
+<body>
+<section class="wallpaper row">
+
+    <!-- INICIO DO CABEÇALHO -->
+    <header>
+        <nav id="menu">
+            <div class="nav-wrapper">
+                <div>
+                    <img th:src="@{/images/embrapa-logo-menu.png} " src="../static/images/embrapa-logo-menu.png" class="left responsive-img" id="logo-embrapa">
+                    <div class="hide-on-small-only">
+                        <img th:src="@{/images/ifsp-logo.png} " src="../static/images/ifsp-logo.png" class="left responsive-img" id="logo-ifsp">
+                    </div>
+                    <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                </div>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="https://www.embrapa.br/pt/home" target="_blank">EMBRAPA</a></li>
+                    <li><a href="https://cmp.ifsp.edu.br/" target="_blank">IFSP</a></li>
+                    <li><a href="#">SOBRE</a></li>
+                </ul>
+            </div>
+        </nav>
+        <ul class="sidenav" id="mobile-demo">
+            <li><a href="https://www.embrapa.br/pt/home" target="_blank">EMBRAPA</a></li>
+            <li><a href="https://cmp.ifsp.edu.br/" target="_blank">IFSP</a></li>
+            <li><a href="#">SOBRE</a></li>
+        </ul>
+    </header>
+    <!-- FIM DO CABEÇALHO -->
+
+
+    <!-- FORM LOGIN -->
+    <section class="row container" id="login">
+        <div class="col s12 l6">
+            <div class="card">
+                <div class="z-depth-4 card-panel">
+                    <div class="row">
+                        <div class="input-field center">
+                            <img th:src="@{/images/embrapa-logo2.png}" src="/static/images/embrapa-logo2.png" alt="logo embrapa" class="responsive-img valign profile-image-login">
+                        </div>
+                    </div>
+                    <form action="#" th:action="@{/usuario/enviar-nova-senha}" method="POST">
+                        <div>
+                            <input type="text" th:value="${id}">
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="input-field">
+                                    <i class="mdi-social-person-outline prefix material-icons">lock</i>
+                                    <input id="senha" name="senha" type="password" required>
+                                    <label class="center-align" for="senha">Nova senha</label>
+                                </div>
+                            </div>
+                            <div class="col s12">
+                                <div class="input-field">
+                                    <i class="mdi-social-person-outline prefix material-icons">lock</i>
+                                    <input id="confirma" name="confirma" type="password" required>
+                                    <label class="center-align" for="confirma">Digite novamente a nova senha</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="center">
+                                <div class="input-field">
+                                    <input type="submit" class="btn btn-large white-text green waves-effect waves-light" value="ENVIAR">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INICIO DO FOOTER-->
+    <footer class="page-footer">
+        <p class="title center">Trabalho de Conclusão de Curso</p>
+        <div class="footer-copyright">
+            <div class="container">
+                                    <span>
+                                      Copyright ©
+                                      <script type="text/javascript">
+                                          document.write(new Date().getFullYear());
+                                      </script>
+                                      <span class="right hide-on-small-only">
+                                          Desenvolvido por Paulo Sérgio do Nascimento
+                                      </span>
+                                    </span>
+            </div>
+        </div>
+    </footer>
+    <!-- FIM DO FOOTER -->
+
+</section>
+<!-- FIM DO WALLPAPER-->
+
+<script type="text/javascript" th:src="@{/scripts/jquery.js}"                 src="../static/scripts/jquery.js"></script>
+<script type="text/javascript" th:src="@{/materialize/js/materialize.min.js}" src="../static/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" th:src="@{/scripts/init.js}"                   src="../static/scripts/init.js"></script>
+</body>
+</html>

@@ -52,9 +52,6 @@ public class ServerInitializer implements ApplicationRunner {
     @Autowired
     ComentarioServiceImplements comentarioService;
 
-    @Autowired
-    AmazonS3Client amazonS3Client;
-
 
     @Override
     public void run(ApplicationArguments applicationArguments){
@@ -383,7 +380,7 @@ public class ServerInitializer implements ApplicationRunner {
     }
 
     protected void persistirUsuarioProdutor() {
-        Usuario produtor = usuarioService.buscarPorEmail("prod@ifsp");
+        Usuario produtor = usuarioService.buscarPorEmail("paulozurzo@gmail.com");
 
         if (produtor == null) {
 
@@ -392,7 +389,8 @@ public class ServerInitializer implements ApplicationRunner {
 
             produtor = new Usuario();
             produtor.setNome("Produtor");
-            produtor.setEmail("prod@ifsp");
+            produtor.setEmail("paulozurzo@gmail.com");
+            produtor.setNova_senha(true);
             produtor.setSenha(new BCryptPasswordEncoder().encode("123"));
             produtor.setData_cadastro(LocalDateTime.now());
             produtor.setTipo(TipoUsuario.PRODUTOR.name());

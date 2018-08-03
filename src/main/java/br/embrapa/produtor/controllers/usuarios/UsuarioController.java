@@ -38,6 +38,8 @@ public class UsuarioController {
         return mv;
     }
 
+
+
     @PostMapping
     public ModelAndView alterarSenha(Principal principal,
                                      @RequestParam("senha") String senha,
@@ -58,10 +60,9 @@ public class UsuarioController {
             mv.addObject("senha", "senha errada!");
         }
 
-
-
         return mv;
     }
+
 
 
     @RequestMapping(value = "/solicitar-nova-senha")
@@ -73,22 +74,66 @@ public class UsuarioController {
         if (user != null){
             String corpo = "Caro " + user.getNome() + ".\n" +
                     "Para cadastrar uma nova senha favor clicar no link abaixo:\n\n" +
-                    Link.HEROKU.getUrl() + Link.NOVA_SENHA.getUrl() + user.getId();
+                    Link.LOCAL.getUrl() + Link.NOVA_SENHA.getUrl() + user.getId();
 
             Mensagem mensagem = new Mensagem("Solicitação de nova senha",corpo,"Não Responda");
 
             if (emailService.enviarEmail(mensagem, user.getEmail())){
+                System.out.println("E-mail enviado");
                 user.setNova_senha(true);
-                mv.addObject("true");
+                mv.addObject("email","email");
             }else{
-                mv.addObject("false");
+                System.out.println("E-mail não enviado");
+                mv.addObject("nemail", "nemail");
             }
         } else {
-            mv.addObject("erro");
+            System.out.println("Usuário não existe no sistema");
+            mv.addObject("nulo", "nulo");
         }
 
         return mv;
     }
+
+
+
+
+    @RequestMapping(value = "/pagina-solicitacao-nova-senha/{id}")
+    public String retornaPaginaDeNovaSenha(@PathVariable Long id, Model model){
+
+        Usuario user = usuarioService.buscarPorId(id);
+
+        if ((user != null) && (user.isNova_senha())){
+                model.addAttribute("id", user.getId());
+                return "novasenha";
+        }
+
+        return "negado";
+    }
+
+    @RequestMapping(value = "/enviar-nova-senha", method = RequestMethod.POST)
+    public ModelAndView recuperaSenha(@RequestParam("id") Long id,
+                                      @RequestParam("senha") String senha,
+                                      @RequestParam("confirma") String confirma){
+
+        ModelAndView mv = new ModelAndView("novasenha");
+        Usuario user = usuarioService.buscarPorId(id);
+
+        if ((user != null) && user.isNova_senha()){
+
+            if (!senha.isEmpty() && senha != null && !confirma.isEmpty() && confirma != null){
+                if(senha.equals(confirma)){
+                    user.setSenha(new BCryptPasswordEncoder().encode(senha));
+                    usuarioService.persistir(user);
+                    mv.addObject("email", user.getEmail());
+                }
+            }else{
+
+            }
+        }
+
+        return mv;
+    }
+
 
 
     @RequestMapping(value = "/alterar", method = RequestMethod.POST)
@@ -115,6 +160,7 @@ public class UsuarioController {
     }
 
 
+
     @RequestMapping(value = "/apagar", method = RequestMethod.POST)
     public String apagarConta(HttpSession session, Principal principal){
         Usuario user = usuarioService.buscarPorEmail(principal.getName());
@@ -125,6 +171,7 @@ public class UsuarioController {
         session.invalidate();
         return "login";
     }
+
 
 
     @RequestMapping(value = "/confirmar-cadastro/{id}", method = RequestMethod.GET)
@@ -145,6 +192,7 @@ public class UsuarioController {
             return "confirma";
         }
     }
+
 
     protected ModelAndView retornaModelAndView(){
         ModelAndView mv = new ModelAndView("home/principal");

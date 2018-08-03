@@ -66,13 +66,13 @@
                             <div class="row center" th:if="${confirmar}">
                                 <p class="margin medium-small blue-text">Confirme seu cadastro acessando seu e-mail.</p>
                             </div>
-                            <div class="row center" th:if="${true}">
+                            <div class="row center" th:if="${email}">
                                 <p class="margin medium-small blue-text">Acesse seu e-mail para mudar a senha.</p>
                             </div>
-                            <div class="row center" th:if="${false}">
+                            <div class="row center" th:if="${nemail}">
                                 <p class="margin medium-small orange-text">Ocorreu um erro! Favor tentar mais tarde!</p>
                             </div>
-                            <div class="row center" th:if="${erro}">
+                            <div class="row center" th:if="${nulo}">
                                 <p class="margin medium-small red-text">Erro! Usuário não encontrado no sistema!</p>
                             </div>
                             <div class="row">
@@ -120,13 +120,15 @@
                         <label for="email">email</label>
                     </div>
                     <!--Sessão de Botões de controle-->
-                    <div class="section row">
-                        <div class="btn-block center">
-                            <div class="input-field col s12 m4 l4">
-                                <input class="input btn btn-large btn-width-model red modal-close" type="reset" href="login" value="CANCELAR">
-                            </div>
-                            <div class="input-field col s12 m4 l4">
-                                <input class="input btn btn-large btn-width-model green" type="submit" id="btnSolicitar" value="SOLICITAR">
+                    <div class="row">
+                        <div class="container">
+                            <div class="btn-block center">
+                                <div class="input-field col s12 m6">
+                                    <input class="input btn btn-large btn-width-model red modal-close" type="reset" href="login" value="CANCELAR">
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input class="input btn btn-large btn-width-model green" type="submit" id="btnSolicitar" value="SOLICITAR">
+                                </div>
                             </div>
                         </div>
                     </div>

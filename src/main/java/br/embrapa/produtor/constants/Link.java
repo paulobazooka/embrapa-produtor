@@ -4,12 +4,10 @@ public enum Link {
 
     LOCAL("http://localhost:8080"),
     HEROKU("https://embrapa-produtor.herokuapp.com"),
-    NOVA_SENHA("/usuario/solicitar-nova-senha/"),
+    NOVA_SENHA("/usuario/pagina-solicitacao-nova-senha/"),
     CONFIRMAR_CADASTRO("/usuario/confirmar-cadastro/");
 
-
     private String link;
-
 
     Link(String link) {
         this.link = link;

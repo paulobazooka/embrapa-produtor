@@ -20,7 +20,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
             "/cadastrar-produtor",
             "/cadastrar-novo-produtor",
             "/confirmar-cadastro/*",
-            "/produtor/cadastro"
+            "/produtor/cadastro",
+            "/usuario/solicitar-nova-senha",
+            "/usuario/enviar-nova-senha",
+            "/novasenha",
+            "/negado",
+            "/usuario/pagina-solicitacao-nova-senha/*"
     };
 
     private final static String[] STATIC_DIR = {
