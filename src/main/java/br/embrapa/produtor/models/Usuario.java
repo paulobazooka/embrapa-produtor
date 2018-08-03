@@ -24,6 +24,7 @@ public class Usuario extends Abstract implements UserDetails {
     private LocalDateTime data_remocao;
     private String tipo;
     private boolean ativo;
+    private boolean nova_senha;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
@@ -108,6 +109,15 @@ public class Usuario extends Abstract implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @Column(insertable = false)
+    public boolean isNova_senha() {
+        return nova_senha;
+    }
+
+    public void setNova_senha(boolean nova_senha) {
+        this.nova_senha = nova_senha;
     }
 
     @Override

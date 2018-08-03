@@ -1,11 +1,15 @@
 package br.embrapa.produtor.controllers.usuarios;
 
 import br.embrapa.produtor.auxiliar.UsuarioUtils;
+import br.embrapa.produtor.constants.Link;
+import br.embrapa.produtor.models.Mensagem;
 import br.embrapa.produtor.models.Usuario;
+import br.embrapa.produtor.serviceimpl.EmailServiceImpl;
 import br.embrapa.produtor.serviceimpl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +25,9 @@ public class UsuarioController {
 
     @Autowired
     UsuarioUtils usuarioUtils;
+
+    @Autowired
+    EmailServiceImpl emailService;
 
 
     @GetMapping
@@ -52,6 +59,33 @@ public class UsuarioController {
         }
 
 
+
+        return mv;
+    }
+
+
+    @RequestMapping(value = "/solicitar-nova-senha")
+    public ModelAndView esqueciSenha(@RequestParam("email") String email){
+
+        ModelAndView mv = new ModelAndView("login");
+        Usuario user = usuarioService.buscarPorEmail(email);
+
+        if (user != null){
+            String corpo = "Caro " + user.getNome() + ".\n" +
+                    "Para cadastrar uma nova senha favor clicar no link abaixo:\n\n" +
+                    Link.HEROKU.getUrl() + Link.NOVA_SENHA.getUrl() + user.getId();
+
+            Mensagem mensagem = new Mensagem("Solicitação de nova senha",corpo,"Não Responda");
+
+            if (emailService.enviarEmail(mensagem, user.getEmail())){
+                user.setNova_senha(true);
+                mv.addObject("true");
+            }else{
+                mv.addObject("false");
+            }
+        } else {
+            mv.addObject("erro");
+        }
 
         return mv;
     }
@@ -90,6 +124,26 @@ public class UsuarioController {
 
         session.invalidate();
         return "login";
+    }
+
+
+    @RequestMapping(value = "/confirmar-cadastro/{id}", method = RequestMethod.GET)
+    public String confirmarCadastroUsuario(@PathVariable Long id, Model model){
+
+        Usuario usuario = usuarioService.buscarPorId(id);
+
+        if (usuario != null){
+            usuario.setAtivo(true);
+            usuarioService.persistir(usuario);
+
+            model.addAttribute("flag","true");
+            model.addAttribute("email", usuario.getEmail());
+
+            return "confirma";
+        } else {
+            model.addAttribute("flag","false");
+            return "confirma";
+        }
     }
 
     protected ModelAndView retornaModelAndView(){

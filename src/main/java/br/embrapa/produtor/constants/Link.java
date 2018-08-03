@@ -4,8 +4,8 @@ public enum Link {
 
     LOCAL("http://localhost:8080"),
     HEROKU("https://embrapa-produtor.herokuapp.com"),
-    NOVA_SENHA(""),
-    CONFIRMAR_CADASTRO("/confirmar-cadastro/");
+    NOVA_SENHA("/usuario/solicitar-nova-senha/"),
+    CONFIRMAR_CADASTRO("/usuario/confirmar-cadastro/");
 
 
     private String link;
