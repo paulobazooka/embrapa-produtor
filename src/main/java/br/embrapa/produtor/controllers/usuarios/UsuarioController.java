@@ -83,6 +83,7 @@ public class UsuarioController {
 
             if (emailService.enviarEmail(mensagem, user.getEmail())){
                 user.setNova_senha(true);
+                usuarioService.persistir(user);
                 mv.addObject("email", user.getEmail());
             }else{
                 System.out.println("E-mail não enviado");
@@ -104,6 +105,7 @@ public class UsuarioController {
     public String retornaPaginaDeNovaSenha(@PathVariable Long id, Model model){
 
         Usuario user = usuarioService.buscarPorId(id);
+        System.out.println("******** " + user.getNome() + "**********");
 
         if ((user != null) && (user.isNova_senha())){
                 model.addAttribute("id", user.getId());
