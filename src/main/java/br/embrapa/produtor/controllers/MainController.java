@@ -67,7 +67,7 @@ public class MainController {
         produtor.setSenha(new BCryptPasswordEncoder().encode(senha));
         produtor = usuarioService.persistir(produtor);
 
-        String link = Link.HEROKU.getUrl() + Link.CONFIRMAR_CADASTRO + produtor.getId();
+        String link = Link.HEROKU.getUrl() + Link.CONFIRMAR_CADASTRO.getUrl() + produtor.getId();
         String corpo  = "Por motivos de segurança é necessário confirmar o cadastro clicando " +
                         "no link abaixo:\n\n " + link;
         String titulo = "Confirmação de cadastro de usuário.";
