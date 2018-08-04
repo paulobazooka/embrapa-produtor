@@ -84,7 +84,7 @@ public class UsuarioController {
             if (emailService.enviarEmail(mensagem, user.getEmail())){
                 user.setNova_senha(true);
                 usuarioService.persistir(user);
-                mv.addObject("email", user.getEmail());
+                mv.addObject("user", user);
             }else{
                 System.out.println("E-mail não enviado");
                 mv.addObject("nemail", "nemail");
