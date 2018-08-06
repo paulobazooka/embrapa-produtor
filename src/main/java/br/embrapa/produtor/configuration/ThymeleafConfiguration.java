@@ -19,7 +19,6 @@ public class ThymeleafConfiguration {
     public ClassLoaderTemplateResolver templateResolver() {
 
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-
         templateResolver.setPrefix("templates/");
         templateResolver.setCacheable(false);
         templateResolver.setSuffix(".html");
@@ -46,7 +45,6 @@ public class ThymeleafConfiguration {
     public ViewResolver viewResolver() {
 
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
 

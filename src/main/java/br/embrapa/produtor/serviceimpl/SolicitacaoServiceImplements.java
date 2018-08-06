@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SolicitacaoServiceImplements implements SolicitacaoService {
 
@@ -54,6 +56,24 @@ public class SolicitacaoServiceImplements implements SolicitacaoService {
     @Override
     public Page<Solicitacao> listarTodasAsSolicitacoesPorProdutorId(Long id, Pageable pageable) {
         return this.solicitacaoRepository.findSolicitacaosByProdutorId(id, pageable);
+    }
+
+    @Override
+    public Solicitacao buscarUltimaSolicitacao(Usuario usuario) {
+        Optional<Solicitacao> solicitacao = Optional.ofNullable(this.solicitacaoRepository.findTopByProdutor(usuario));
+        if (solicitacao.isPresent())
+            return solicitacao.get();
+        else
+            return null;
+    }
+
+    @Override
+    public Solicitacao buscarUltimaSolicitacaoRealizada(Usuario usuario){
+        Optional<Solicitacao> solicitacao = Optional.ofNullable(this.solicitacaoRepository.findFirstByProdutorOrderByIdDesc(usuario));
+        if (solicitacao.isPresent())
+            return solicitacao.get();
+        else
+            return null;
     }
 
 

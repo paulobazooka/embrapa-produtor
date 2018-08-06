@@ -9,7 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Configuration
-@Profile("heroku")
+@Profile("prod")
 public class DataBaseHerokuConfiguration {
 
     @Bean

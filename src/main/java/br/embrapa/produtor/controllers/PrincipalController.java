@@ -39,10 +39,10 @@ public class PrincipalController {
     AmazonS3Client amazonS3Client;
 
     @RequestMapping("/")
-    @ResponseBody
     public ModelAndView principal(Principal principal,
                                   Pageable pageable,
                                   @RequestParam(defaultValue = "0") int page){
+
         ModelAndView mv = new ModelAndView("home/principal");
         mv.addObject("local", "solicitacao/solicitacao");
         mv.addObject("fragmento", "solicitacao");
@@ -56,7 +56,12 @@ public class PrincipalController {
 
 
         if (user.getTipo().equals(TipoUsuario.PRODUTOR.name())){
-            mv.addObject("solicitacoes", solicitacaoService.listarTodasAsSolicitacoesPorProdutorId(user.getId(), pageable));
+            Iterable<Solicitacao> solicitacoes = solicitacaoService.listarTodasAsSolicitacoesPorProdutorId(user.getId(), pageable);
+            mv.addObject("solicitacoes", solicitacoes);
+            Solicitacao ultima = solicitacaoService.buscarUltimaSolicitacaoRealizada(user);
+            if (ultima != null){
+                mv.addObject("ultima", ultima);
+            }
         }else{
             Page<Solicitacao> solicitacoes = solicitacaoService.listarTodasAsSolicitacoesPorPagina(pageable);
             mv.addObject("solicitacoes", solicitacoes);

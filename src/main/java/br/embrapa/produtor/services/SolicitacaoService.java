@@ -24,4 +24,9 @@ public interface SolicitacaoService {
     Page<Solicitacao> listarTodasAsSolicitacoesPorPagina(Pageable pageable);
 
     Page<Solicitacao> listarTodasAsSolicitacoesPorProdutorId(Long id, Pageable pageable);
+
+    Solicitacao buscarUltimaSolicitacao(Usuario usuario);
+
+    Solicitacao buscarUltimaSolicitacaoRealizada(Usuario usuario);
+
 }

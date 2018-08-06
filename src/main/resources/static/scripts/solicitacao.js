@@ -18,4 +18,17 @@ $(document).ready(function(){
            }
        }
     });
+
+    $('#btnNovaSolicitacao').click(function () {
+        carregarUltimaPlantaSolicitada();
+    })
 });
+
+
+function carregarUltimaPlantaSolicitada() {
+
+    if ($('#ultimaplanta').text() != null){
+        $('#cultura option:contains(' + $('#ultimaplanta').text() + ')').attr('selected', 'selected');
+        $('#cultura').formSelect();
+    }
+}

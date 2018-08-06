@@ -62,7 +62,16 @@ function buscarEstados() {
 
             // acrescenta em html as tags <option>
             $("#estados").html(option);
+
             $('#estados').formSelect();
+
+            if ($('#ultimoestado').text() != null){
+                $('#estados option:contains(' + $('#ultimoestado').text() + ')').attr('selected', 'selected');
+                $('#estados').formSelect();
+                buscarCidades();
+            }
+
+
 
             // habilita o select cidades
             $("#cidades").removeAttr('disabled');
@@ -104,7 +113,16 @@ function buscarCidades(){
 
             // acrescenta em html as tags <option>
             $("#cidades").html(option);
+
+
             $('#cidades').formSelect();
+
+
+            if ($('#ultimacidade').text() != null){
+                $('#cidades option:contains(' + $('#ultimacidade').text() +')').attr('selected', 'selected');
+                $('#cidades').formSelect();
+            }
+
         }
     }
 }
