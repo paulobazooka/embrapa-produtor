@@ -127,6 +127,7 @@ public class UsuarioController {
 
             if (!senha.isEmpty() && senha != null && !confirma.isEmpty() && confirma != null){
                 if(senha.equals(confirma)){
+                    user.setNova_senha(false);
                     user.setSenha(new BCryptPasswordEncoder().encode(senha));
                     usuarioService.persistir(user);
                     mv.addObject("email", user.getEmail());
