@@ -5,8 +5,10 @@
             <section class="pagination section">
                 <div class="col s12">
                     <div class="card">
-                        <div sec:authorize="hasRole('ROLE_PRODUTOR')">
-                            <a class="btn btn-large btn-solicitacao tooltipped green modal-trigger" data-position="right" data-delay="50" data-tooltip="Nova Requisição" href="#cadastroSolicitacao" id="btnNovaSolicitacao">Nova Solicitação</a>
+                        <div class="row">
+                            <div sec:authorize="hasRole('ROLE_PRODUTOR')" class="col s12 m6">
+                                <a class="btn btn-large btn-solicitacao tooltipped green modal-trigger" data-position="right" data-delay="50" data-tooltip="Nova Requisição" href="#cadastroSolicitacao" id="btnNovaSolicitacao">SOLICITAR</a>
+                            </div>
                         </div>
                         <div class="row">
                             <h5 class="title green-text center">SOLICITAÇÕES</h5>
@@ -19,8 +21,8 @@
                                         <th>TÍTULO</th>
                                         <th>CULTURA</th>
                                         <th>DATA</th>
-                                        <th>CIDADE</th>
-                                        <th>ESTADO</th>
+                                        <th sec:authorize="hasRole('ROLE_PESQUISADOR')">CIDADE</th>
+                                        <th sec:authorize="hasRole('ROLE_PESQUISADOR')">ESTADO</th>
                                         <th>VISUALISAR</th>
                                         <th sec:authorize="hasRole('ROLE_PESQUISADOR')">EDITAR</th>
                                     </tr>
@@ -32,8 +34,8 @@
                                             <td> <span th:text="${solicitacao.titulo}"></span>         </td>
                                             <td> <span th:text="${solicitacao.cultura.nome}"></span>   </td>
                                             <td> <span th:text="${#temporals.format(solicitacao.data_requisicao, 'dd/MM/yyyy HH:mm')} + 'hs'"></span></td>
-                                            <td> <span th:text="${solicitacao.cidade}"></span>         </td>
-                                            <td> <span th:text="${solicitacao.estado}"></span>         </td>
+                                            <td sec:authorize="hasRole('ROLE_PESQUISADOR')"> <span th:text="${solicitacao.cidade}"></span>         </td>
+                                            <td sec:authorize="hasRole('ROLE_PESQUISADOR')"> <span th:text="${solicitacao.estado}"></span>         </td>
                                             <td> <a href="#" th:href="@{'/detalhes-solicitacao/' + ${solicitacao.id}}" class="btn-small orange waves-effect waves-light"><i class="material-icons">visibility</i></a></td>
                                             <td sec:authorize="hasRole('ROLE_PESQUISADOR')"><a href="#" class="btn-small blue waves-effect waves-light"><i class="material-icons">edit</i></a></td>
                                         </tr>

@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,31 +45,33 @@ public class PrincipalController {
                                   Pageable pageable,
                                   @RequestParam(defaultValue = "0") int page){
 
-        ModelAndView mv = new ModelAndView("home/principal");
-        mv.addObject("local", "solicitacao/solicitacao");
-        mv.addObject("fragmento", "solicitacao");
-
+        ModelAndView mv;
         Usuario user = usuarioService.buscarPorEmail(principal.getName());
-        Iterable<Cultura> culturas = culturaService.listarCulturasPorOrdemAlfabetica();
 
-        mv.addObject("page", page);
-        mv.addObject("culturas", culturas);
-        mv.addObject("user", user);
+        // Se o usuário for do tipo Produtor, carregará uma tela diferente
+        if (user.getTipo().equals(TipoUsuario.PRODUTOR.toString())){
+            mv = new ModelAndView("produtor/pagina_principal_produtor");
+            mv.addObject("local", "produtor/fragmento_principal_produtor");
+            mv.addObject("fragmento", "principal");
+            mv.addObject("user", user);
 
-
-        if (user.getTipo().equals(TipoUsuario.PRODUTOR.name())){
-            Iterable<Solicitacao> solicitacoes = solicitacaoService.listarTodasAsSolicitacoesPorProdutorId(user.getId(), pageable);
-            mv.addObject("solicitacoes", solicitacoes);
-            Solicitacao ultima = solicitacaoService.buscarUltimaSolicitacaoRealizada(user);
-            if (ultima != null){
-                mv.addObject("ultima", ultima);
-            }
+            return mv;
+            // Se o usuário for do tipo Administrador ou Pesquisador carregará a tela específica
         }else{
-            Page<Solicitacao> solicitacoes = solicitacaoService.listarTodasAsSolicitacoesPorPagina(pageable);
-            mv.addObject("solicitacoes", solicitacoes);
-        }
+            mv = new ModelAndView("home/principal");
+            mv.addObject("local", "solicitacao/solicitacao");
+            mv.addObject("fragmento", "solicitacao");
 
-        return mv;
+            Iterable<Cultura> culturas = culturaService.listarCulturasPorOrdemAlfabetica();
+            Page<Solicitacao> solicitacoes = solicitacaoService.listarTodasAsSolicitacoesPorPagina(pageable);
+
+            mv.addObject("solicitacoes", solicitacoes);
+            mv.addObject("page", page);
+            mv.addObject("culturas", culturas);
+            mv.addObject("user", user);
+
+            return mv;
+        }
     }
 
 

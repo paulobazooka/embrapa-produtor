@@ -3,19 +3,76 @@
         <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
             <section class="section">
                 <div class="col s12">
-                    <div class="card">
-                        <div class="col s12">
-                            <a href="#" class="btn-large btn-block green">Cadastrar Administrador</a>
+                    <div class="row">
+                        <div class="card">
+                            <div class="col s12 m4 l4">
+                                <a href="#" class="btn-large btn-block green">Cadastrar Administrador</a>
+                            </div>
+                            <div class="col s12 m4 l4">
+                                <a href="#" class="btn-large btn-block orange">Cadastrar Pesquisador</a>
+                            </div>
+                            <div class="col s12 m4 l4">
+                                <a href="#" class="btn-large btn-block red">Cadastrar Produtor</a>
+                            </div>
                         </div>
-                        <div class="col s12">
-                            <a href="#" class="btn-large btn-block orange">Cadastrar Pesquisador</a>
-                        </div>
-                        <div class="col s12">
-                            <a href="#" class="btn-large btn-block red">Cadastrar Produtor</a>
+                    </div>
+                    <div class="row">
+                        <div class="card">
+                            <div class="col s12 m4 l4">
+                                <a href="#" class="btn-large btn-block blue">Baixar Arquivo .CSV</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+
+            <!-- [INICIO] MODAL DE CADASTRO DE USUARIOS -->
+            <div class="">
+                <form method="post" action="#" th:action="@{/}"
+                      class="login-form container">
+
+                    <div class="row input-field">
+                        <i class="mdi-social-person-outline prefix material-icons">person</i>
+                        <input type="text" required>
+                        <label>Nome</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="mdi-social-person-outline prefix material-icons">email</i>
+                        <input class="materialize-textarea validate" type="email" required>
+                        <label>e-mail</label>
+                        <span class="helper-text" data-error="e-mail invalido" data-success="e-mail valido"></span>
+                    </div>
+                    <div class="row input-field">
+                        <i class="mdi-social-person-outline prefix material-icons">phone</i>
+                        <input class="materialize-textarea" type="tel" required>
+                        <label>telefone</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="mdi-action-person-outline prefix material-icons">lock_outline</i>
+                        <input class="materialize-textarea" type="password" required>
+                        <label>senha</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6 m6 l6 center">
+                            <div class="input-field">
+                                <input type="reset" class="btn btn-large white-text orange waves-effect waves-light" value="LIMPAR">
+                            </div>
+                        </div>
+                        <div class="col s6 m6 l6 center">
+                            <div class="input-field">
+                                <input type="submit" class="btn btn-large white-text green waves-effect waves-light" value="CADASTRAR">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                </form>
+            </div>
+            <!-- [FIM] MODAL DE CADASTRO DE USUARIOS -->
+
+
         </div>
     </div>
 </div>

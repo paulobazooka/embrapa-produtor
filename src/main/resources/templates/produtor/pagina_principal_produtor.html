@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt=br"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<!--========================================================================= -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Embrapa Produtor</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <link th:href="@{/styles/principal.css}" href="../../static/styles/principal.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link th:href="@{/styles/pagina_principal_produtor.css}" href="../../static/styles/pagina_principal_produtor.css" type="text/css" rel="stylesheet" media="screen,projection">
+</head>
+
+<body>
+
+<div class="wallpaper">
+
+    <!-- INICIO DO MENU PRINCIPAL -->
+    <nav id="menu" class="left">
+        <div  class="nav-wrapper">
+            <img th:src="@{/images/embrapa-logo-menu.png} "src="../../static/images/embrapa-logo-menu.png" class="left responsive-img" id="logo-embrapa">
+            <div class="hide-on-small-only">
+                <img th:src="@{/images/ifsp-logo.png} "src="../../static/images/ifsp-logo.png" class="left responsive-img" id="logo-ifsp">
+            </div>
+            <div class="right" id="logout">
+                <form action="/logout">
+                    <input type="submit" class="btn btn-small orange darken-4 white-text" style="margin-right: 5px" value="SAIR">
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- FIM DO MENU PRINCIPAL -->
+
+
+
+    <!-- INICIO CORPO DE INFORMAÇÕES -->
+    <div class="col s12 l10" id="corpo">
+        <div th:if="${local}">
+            <div th:replace="${local} :: ${fragmento}">
+
+            </div>
+        </div>
+        <br><br><br><br>
+    </div>
+    <!-- FIM CORPO DE INFORMAÇÕES -->
+
+
+    <!-- INICIO DO FOOTER-->
+    <footer class="page-footer">
+        <p class="title center">Trabalho de Conclusão de Curso</p>
+        <div class="footer-copyright">
+            <div class="container">
+                            <span>
+                              Copyright ©
+                              <script type="text/javascript">
+                                  document.write(new Date().getFullYear());
+                              </script>
+                              <span class="right hide-on-small-only">
+                                  Desenvolvido por Paulo Sérgio do Nascimento
+                              </span>
+                            </span>
+            </div>
+        </div>
+    </footer>
+    <!-- FIM DO FOOTER -->
+
+</div>
+<!-- FIM DO WALLPAPER-->
+
+<!-- ============================================= SCRIPTS ========================================= -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+<script type="text/javascript" th:src="@{/scripts/principal.js}" src="../../static/scripts/principal.js"></script>
+<script type="text/javascript" th:src="@{/scripts/cultura.js}" src="../../static/scripts/cultura.js"></script>
+<script type="text/javascript" th:src="@{/scripts/endereco.js}" src="../../static/scripts/endereco.js"></script>
+
+</body>
+</html>
