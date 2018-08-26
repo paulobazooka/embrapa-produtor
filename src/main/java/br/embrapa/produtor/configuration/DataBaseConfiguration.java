@@ -1,12 +1,12 @@
 package br.embrapa.produtor.configuration;
 
 
-import javax.sql.DataSource;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -19,7 +19,7 @@ public class DataBaseConfiguration {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/embrapaprodutor");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("123");
+        dataSource.setPassword("postgres");
         return dataSource;
     }
 }

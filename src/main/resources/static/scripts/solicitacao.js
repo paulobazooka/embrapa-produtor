@@ -2,6 +2,7 @@ $(document).ready(function(){
 
     $('#doencas').formSelect();
 
+
     $('#doencas').change(function () {
         $(this).formSelect();
     });
