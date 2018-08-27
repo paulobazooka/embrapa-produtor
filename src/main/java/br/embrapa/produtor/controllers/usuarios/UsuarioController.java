@@ -94,7 +94,6 @@ public class UsuarioController {
             mv.addObject("nulo", "nulo");
         }
 
-
         return mv;
     }
 
@@ -129,7 +128,7 @@ public class UsuarioController {
                 if(senha.equals(confirma)){
                     user.setNova_senha(false);
                     user.setSenha(new BCryptPasswordEncoder().encode(senha));
-                    usuarioService.persistir(user);
+                    usuarioService.atualizarUsuario(user, user.getId());
                     mv.addObject("email", user.getEmail());
                 }
             }else{

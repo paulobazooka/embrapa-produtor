@@ -9,7 +9,7 @@
                                 <a href="#cadastroUsuario" class="btn-large btn-block green modal-trigger">Cadastrar Usuário</a>
                             </div>
                             <div class="col s12 m4 l4">
-                                <a href="#" class="btn-large btn-block orange">Alterar Usuário</a>
+                                <a href="/administrador/cadastro" class="btn-large btn-block orange">Alterar Usuário</a>
                             </div>
                             <div class="col s12 m4 l4">
                                 <a href="#" class="btn-large btn-block blue">Baixar Arquivo .CSV</a>
@@ -22,40 +22,40 @@
 
             <!-- [INICIO] MODAL DE CADASTRO DE USUARIOS -->
             <div class="modal s12 m10" id="cadastroUsuario">
-                <form method="post" action="#" th:action="@{/}" class="login-form container">
+                <form method="post" action="/administrador/cadastro" th:action="@{/administrador/cadastro}" class="login-form container">
                     <h5 class="card-title center grey-text">Csdastro de Usuário</h5>
 
                     <div class="col s12 l6">
                         <select name="tipo" id="tipo">
-                            <option th:each="tipo :${tipos}" th:value="${tipo}" th:text="${tipo}" th:id="${tipo}"></option>
+                            <option th:each="tipo :${tipos}" th:value="${tipo}" th:text="${tipo}" th:id="${tipo}" th:name="${tipo}"></option>
                         </select>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="mdi-social-person-outline prefix material-icons">person</i>
-                            <input type="text" id="nome" required>
+                            <input type="text" id="nome" name="nome" required>
                             <label>Nome</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="mdi-social-person-outline prefix material-icons">email</i>
-                            <input class="materialize-textarea validate" type="email" id="email" required>
+                            <input class="materialize-textarea validate" type="email" id="email" name="email" required>
                             <label>e-mail</label>
                             <span class="helper-text" data-error="e-mail invalido" data-success="e-mail valido"></span>
                         </div>
                         <div class="input-field col s12">
                             <i class="mdi-social-person-outline prefix material-icons">phone</i>
-                            <input class="materialize-textarea" type="text" id="telefone" required>
+                            <input class="materialize-textarea" type="text" id="telefone" name="telefone" required>
                             <label>telefone</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="mdi-action-person-outline prefix material-icons">lock_outline</i>
-                            <input class="materialize-textarea" type="password" id="senha" required>
+                            <input class="materialize-textarea" type="password" id="senha" name="senha" required>
                             <label>senha</label>
                         </div>
                         <div class="input-field col s12">
                             <i class="mdi-action-person-outline prefix material-icons">lock_outline</i>
-                            <input class="materialize-textarea" type="password" id="confirma" required>
+                            <input class="materialize-textarea" type="password" id="confirma" name="confirma" required>
                             <label>confirmar senha</label>
                         </div>
                     </div>

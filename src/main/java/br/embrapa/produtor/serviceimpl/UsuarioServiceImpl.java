@@ -35,7 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
      */
     @Override
     public Usuario persistir(Usuario usuario) {
-        refreshAuth.autenticarNovaSenhaUsuario(ur.save(usuario));
+      //  refreshAuth.autenticarNovaSenhaUsuario(ur.save(usuario));
         return this.ur.save(usuario);
     }
 
