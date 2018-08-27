@@ -65,6 +65,7 @@ public class MainController {
         produtor.setTipo(TipoUsuario.PRODUTOR.name());
         produtor.setRoles(roles);
         produtor.setSenha(new BCryptPasswordEncoder().encode(senha));
+        produtor.setAtivo(false);
         produtor = usuarioService.persistir(produtor);
 
         String link = Link.HEROKU.getUrl() + Link.CONFIRMAR_CADASTRO.getUrl() + produtor.getId();

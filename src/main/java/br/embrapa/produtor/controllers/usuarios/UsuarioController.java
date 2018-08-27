@@ -114,6 +114,9 @@ public class UsuarioController {
         return "negado";
     }
 
+
+
+
     @RequestMapping(value = "/enviar-nova-senha", method = RequestMethod.POST)
     public ModelAndView recuperaSenha(@RequestParam("id") Long id,
                                       @RequestParam("senha") String senha,
@@ -179,7 +182,7 @@ public class UsuarioController {
 
 
 
-    @RequestMapping(value = "/confirmar-cadastro/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirmar-cadastro/{id}")
     public String confirmarCadastroUsuario(@PathVariable Long id, Model model){
 
         Usuario usuario = usuarioService.buscarPorId(id);

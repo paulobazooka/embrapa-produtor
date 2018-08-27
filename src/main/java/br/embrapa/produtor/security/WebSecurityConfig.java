@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
 
 
 @Configuration @EnableWebSecurity
@@ -19,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     private final static String[] PAGES_PERMITED = {
             "/cadastrar-produtor",
             "/cadastrar-novo-produtor",
-            "/confirmar-cadastro/*",
+            "/usuario/confirmar-cadastro/*",
             "/produtor/cadastro",
             "/usuario/*",
             "/novasenha",
@@ -41,7 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,  PAGES_PERMITED).permitAll()
                 .antMatchers(HttpMethod.POST, PAGES_PERMITED).permitAll()

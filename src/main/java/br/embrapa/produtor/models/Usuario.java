@@ -86,7 +86,7 @@ public class Usuario extends Abstract implements UserDetails {
         this.data_remocao = data_remocao;
     }
 
-    @Column(nullable = false, insertable = false)
+    @Column(columnDefinition="tinyint(1) default false")
     public boolean isAtivo() {
         return ativo;
     }
