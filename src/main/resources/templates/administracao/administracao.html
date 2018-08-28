@@ -9,7 +9,7 @@
                                 <a href="#cadastroUsuario" class="btn-large btn-block green modal-trigger">Cadastrar Usuário</a>
                             </div>
                             <div class="col s12 m4 l4">
-                                <a href="/administrador/cadastro" class="btn-large btn-block orange">Alterar Usuário</a>
+                                <a href="/administrador/cadastro" methods="get" class="btn-large btn-block orange">Alterar Usuário</a>
                             </div>
                             <div class="col s12 m4 l4">
                                 <a href="#" class="btn-large btn-block blue">Baixar Arquivo .CSV</a>
@@ -23,10 +23,10 @@
             <!-- [INICIO] MODAL DE CADASTRO DE USUARIOS -->
             <div class="modal s12 m10" id="cadastroUsuario">
                 <form method="post" action="/administrador/cadastro" th:action="@{/administrador/cadastro}" class="login-form container">
-                    <h5 class="card-title center grey-text">Csdastro de Usuário</h5>
+                    <h5 class="card-title center grey-text">Cadastro de Usuário</h5>
 
                     <div class="col s12 l6">
-                        <select name="tipo" id="tipo">
+                        <select name="tipos" id="tipos">
                             <option th:each="tipo :${tipos}" th:value="${tipo}" th:text="${tipo}" th:id="${tipo}" th:name="${tipo}"></option>
                         </select>
                     </div>

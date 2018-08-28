@@ -9,6 +9,7 @@ import br.embrapa.produtor.serviceimpl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,7 +75,7 @@ public class AdministradorController {
         usuario.setSenha(new BCryptPasswordEncoder().encode(senha));
         usuario.setRoles(roles);
 
-     //   usuarioService.persistir(usuario);
+        usuarioService.persistir(usuario);
 
         return mv;
 
@@ -84,13 +85,43 @@ public class AdministradorController {
 
     @RequestMapping(value = "/cadastro", method = RequestMethod.GET)
     public ModelAndView crudUsuarios(Principal principal){
+
         ModelAndView mv = new ModelAndView("home/principal");
 
         Usuario user = usuarioService.buscarPorEmail(principal.getName());
+        Iterable<Usuario> users = usuarioService.listarUsuarios();
+
         mv.addObject("user", user);
         mv.addObject("local","administracao/usuarios");
         mv.addObject("fragmento", "usuarios");
+        mv.addObject("users", users);
+        return mv;
+    }
 
+
+    @RequestMapping(value = "/alterar/{id}", method = RequestMethod.GET)
+    public ModelAndView alterarUsuario(Principal principal,
+                                       @PathVariable Long id){
+        ModelAndView mv = new ModelAndView("/home/principal");
+        mv.addObject("local","administracao/usuario_alterar");
+        mv.addObject("fragmento", "usuario_alterar");
+
+        Usuario admin = usuarioService.buscarPorEmail(principal.getName());
+
+        mv.addObject("user", admin);
+
+        Usuario usuario = usuarioService.buscarPorId(id);
+
+        System.out.println(usuario.getNome());
+
+
+        return mv;
+    }
+
+
+    @RequestMapping(value = "/alterar", method = RequestMethod.POST)
+    public ModelAndView alterarUsuarioPost(Principal principal){
+        ModelAndView mv = carregarPrincipal(principal);
 
         return mv;
     }
@@ -103,6 +134,8 @@ public class AdministradorController {
         mv.addObject("fragmento", "administracao");
 
         Usuario admin = usuarioService.buscarPorEmail(principal.getName());
+
+
 
         List<String> tipos = new ArrayList<>();
 

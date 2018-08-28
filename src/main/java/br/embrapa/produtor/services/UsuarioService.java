@@ -12,5 +12,7 @@ public interface UsuarioService {
 
     Usuario buscarPorId(Long id);
 
+    Iterable<Usuario> listarUsuarios();
+
     void removerTodosUsuarios();
 }

@@ -83,6 +83,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         return user;
     }
 
+    @Override
+    public Iterable<Usuario> listarUsuarios() {
+        return ur.findAllByOrderByIdAsc();
+    }
+
 
     @Override
     public void removerTodosUsuarios() {

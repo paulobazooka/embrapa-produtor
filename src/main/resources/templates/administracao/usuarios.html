@@ -1,7 +1,7 @@
 <div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
     <div th:fragment="usuarios">
         <div class="col s12 center">
-            <div class="card white">
+           <!-- <div class="card">
                 <div class="card-content ">
                     <span class="card-title grey-text">USUARIOS</span>
                     <form action="#">
@@ -23,6 +23,32 @@
                         </div>
                     </form>
                     <br>
+                </div>
+            </div>-->
+
+            <div th:if="${users}" class="col s12 center">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <h5 class="title green-text center">USUÁRIOS</h5>
+                        </div>
+                        <table class="highlight responsive-table">
+                            <thead>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>E-mail</th>
+                                <th>Editar</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="usuario :${users}" class="table-view">
+                                    <td><span class="col s12 m4 grey-text" th:value="${usuario.nome}"  th:text="${usuario.nome}"></span></td>
+                                    <td><span class="col s12 m4 grey-text" th:value="${usuario.tipo}"  th:text="${usuario.tipo}"></span></td>
+                                    <td><span class="col s12 m4 grey-text" th:value="${usuario.email}" th:text="${usuario.email}"></span></td>
+                                    <td><a href="#" class="btn-small blue waves-effect waves-light" methods="get"><i class="material-icons">edit</i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
