@@ -44,7 +44,7 @@
                                     <td><span class="col s12 m4 grey-text" th:value="${usuario.nome}"  th:text="${usuario.nome}"></span></td>
                                     <td><span class="col s12 m4 grey-text" th:value="${usuario.tipo}"  th:text="${usuario.tipo}"></span></td>
                                     <td><span class="col s12 m4 grey-text" th:value="${usuario.email}" th:text="${usuario.email}"></span></td>
-                                    <td><a href="#" class="btn-small blue waves-effect waves-light" methods="get"><i class="material-icons">edit</i></a></td>
+                                    <td><a th:href="@{'/administrador/alterar/' + ${usuario.id}}" class="btn-small blue waves-effect waves-light" methods="get"><i class="material-icons">edit</i></a></td>
                                 </tr>
                             </tbody>
                         </table>

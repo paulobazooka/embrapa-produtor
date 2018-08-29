@@ -9,10 +9,7 @@ import br.embrapa.produtor.serviceimpl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -107,21 +104,48 @@ public class AdministradorController {
         mv.addObject("fragmento", "usuario_alterar");
 
         Usuario admin = usuarioService.buscarPorEmail(principal.getName());
-
-        mv.addObject("user", admin);
-
         Usuario usuario = usuarioService.buscarPorId(id);
 
-        System.out.println(usuario.getNome());
-
+        mv.addObject("user", admin);
+        mv.addObject("usuario", usuario);
 
         return mv;
     }
 
 
     @RequestMapping(value = "/alterar", method = RequestMethod.POST)
-    public ModelAndView alterarUsuarioPost(Principal principal){
+    public ModelAndView alterarUsuarioPost(Principal principal,
+                                           @RequestParam("id") Long id,
+                                           @RequestParam("nome") String nome,
+                                           @RequestParam("telefone") String telefone,
+                                           @RequestParam("email") String email,
+                                           @RequestParam("senha") String senha){
+
         ModelAndView mv = carregarPrincipal(principal);
+
+        Usuario banco = usuarioService.buscarPorId(id);
+        String pass = new BCryptPasswordEncoder().encode(senha);
+
+
+        if(!pass.equals(banco.getSenha())){
+            banco.setSenha(pass);
+        }
+
+        if(!banco.getNome().equals(nome)){
+            banco.setNome(nome);
+        }
+
+        if(!banco.getEmail().equals(email)){
+            banco.setEmail(email);
+        }
+
+        if(!banco.getTelefone().equals(telefone)){
+            banco.setTelefone(telefone);
+        }
+
+        if(usuarioService.persistir(banco) != null){
+            System.out.println("************ Usuário atualizado com sucesso! *********");
+        }
 
         return mv;
     }

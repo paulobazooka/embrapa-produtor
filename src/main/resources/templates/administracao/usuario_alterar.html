@@ -1,7 +1,57 @@
 <div xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
     <div th:fragment="usuario_alterar">
         <div class="col s12 center">
-            <h5>ALTERAR</h5>
+            <div th:unless="${usuario}">
+                <h3>ERRO</h3>
+            </div>
+            <div th:if="${usuario}">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title" th:text="${usuario.nome}"></span>
+
+                        <form method="post" th:action="@{/administrador/alterar}" class="login-form container" >
+                            <div class="hide">
+                                <input type="number" id="id" name="id" th:value="${usuario.id}">
+                            </div>
+                            <div class="row input-field">
+                                <i class="mdi-social-person-outline prefix material-icons">person</i>
+                                <input type="text" th:value="${usuario.nome}" required id="nome" name="nome">
+                                <label>Nome</label>
+                            </div>
+                            <div class="row input-field">
+                                <i class="mdi-social-person-outline prefix material-icons">email</i>
+                                <input class="materialize-textarea validate" type="email" th:value="${usuario.email}" id="email" name="email" required>
+                                <label>e-mail</label>
+                                <span class="helper-text" data-error="e-mail invalido" data-success="e-mail valido"></span>
+                            </div>
+                            <div class="row input-field">
+                                <i class="mdi-social-person-outline prefix material-icons">phone</i>
+                                <input class="materialize-textarea" type="tel" th:value="${usuario.telefone}" id="telefone" name="telefone" required>
+                                <label>telefone</label>
+                            </div>
+                            <div class="row input-field">
+                                <i class="mdi-action-person-outline prefix material-icons">lock_outline</i>
+                                <input class="materialize-textarea" type="password" th:value="${usuario.senha}" id="senha" name="senha" required>
+                                <label>senha</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s6 m6 l6 center">
+                                    <div class="input-field">
+                                        <input type="reset" class="btn btn-large white-text orange waves-effect waves-light" value="LIMPAR">
+                                    </div>
+                                </div>
+                                <div class="col s6 m6 l6 center">
+                                    <div class="input-field">
+                                        <input type="submit" class="btn btn-large white-text green waves-effect waves-light" value="ALTERAR">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
