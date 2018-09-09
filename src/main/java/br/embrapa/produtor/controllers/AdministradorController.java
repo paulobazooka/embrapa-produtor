@@ -1,17 +1,24 @@
 package br.embrapa.produtor.controllers;
 
+import br.embrapa.produtor.auxiliar.ExportCSV;
 import br.embrapa.produtor.constants.Modulo;
 import br.embrapa.produtor.constants.TipoUsuario;
 import br.embrapa.produtor.models.Role;
 import br.embrapa.produtor.models.Usuario;
 import br.embrapa.produtor.serviceimpl.RoleServiceImplents;
+import br.embrapa.produtor.serviceimpl.SolicitacaoServiceImplements;
 import br.embrapa.produtor.serviceimpl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,8 +34,11 @@ public class AdministradorController {
     @Autowired
     RoleServiceImplents roleServiceImplents;
 
+    @Autowired
+    SolicitacaoServiceImplements solicitacaoService;
+
     @RequestMapping("/pagina")
-    public ModelAndView paginaAdministrador(Principal principal){
+    public ModelAndView paginaAdministrador(Principal principal) {
 
         ModelAndView mv = carregarPrincipal(principal);
 
@@ -43,20 +53,20 @@ public class AdministradorController {
                                         @RequestParam("telefone") String telefone,
                                         @RequestParam("senha") String senha,
                                         @RequestParam("confirma") String confirma,
-                                        @RequestParam("tipo") String tipo){
+                                        @RequestParam("tipo") String tipo) {
 
         ModelAndView mv = carregarPrincipal(principal);
 
         List<Role> roles = new ArrayList<>();
 
-        if(tipo.equals(TipoUsuario.ADMINISTRADOR.name())) {
+        if (tipo.equals(TipoUsuario.ADMINISTRADOR.name())) {
             roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PRODUTOR.name()));
             roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PESQUISADOR.name()));
             roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_ADMIN.name()));
-        }else{
-            if(tipo.equals(TipoUsuario.PESQUISADOR.name())){
+        } else {
+            if (tipo.equals(TipoUsuario.PESQUISADOR.name())) {
                 roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PESQUISADOR.name()));
-            }else{
+            } else {
                 roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PRODUTOR.name()));
             }
         }
@@ -79,9 +89,8 @@ public class AdministradorController {
     }
 
 
-
     @RequestMapping(value = "/cadastro", method = RequestMethod.GET)
-    public ModelAndView crudUsuarios(Principal principal){
+    public ModelAndView crudUsuarios(Principal principal) {
 
         ModelAndView mv = new ModelAndView("home/principal");
 
@@ -89,7 +98,7 @@ public class AdministradorController {
         Iterable<Usuario> users = usuarioService.listarUsuarios();
 
         mv.addObject("user", user);
-        mv.addObject("local","administracao/usuarios");
+        mv.addObject("local", "administracao/usuarios");
         mv.addObject("fragmento", "usuarios");
         mv.addObject("users", users);
         return mv;
@@ -98,9 +107,9 @@ public class AdministradorController {
 
     @RequestMapping(value = "/alterar/{id}", method = RequestMethod.GET)
     public ModelAndView alterarUsuario(Principal principal,
-                                       @PathVariable Long id){
+                                       @PathVariable Long id) {
         ModelAndView mv = new ModelAndView("/home/principal");
-        mv.addObject("local","administracao/usuario_alterar");
+        mv.addObject("local", "administracao/usuario_alterar");
         mv.addObject("fragmento", "usuario_alterar");
 
         Usuario admin = usuarioService.buscarPorEmail(principal.getName());
@@ -119,7 +128,7 @@ public class AdministradorController {
                                            @RequestParam("nome") String nome,
                                            @RequestParam("telefone") String telefone,
                                            @RequestParam("email") String email,
-                                           @RequestParam("senha") String senha){
+                                           @RequestParam("senha") String senha) {
 
         ModelAndView mv = carregarPrincipal(principal);
 
@@ -127,27 +136,51 @@ public class AdministradorController {
         String pass = new BCryptPasswordEncoder().encode(senha);
 
 
-        if(!pass.equals(banco.getSenha())){
+        if (!pass.equals(banco.getSenha())) {
             banco.setSenha(pass);
         }
 
-        if(!banco.getNome().equals(nome)){
+        if (!banco.getNome().equals(nome)) {
             banco.setNome(nome);
         }
 
-        if(!banco.getEmail().equals(email)){
+        if (!banco.getEmail().equals(email)) {
             banco.setEmail(email);
         }
 
-        if(!banco.getTelefone().equals(telefone)){
+        if (!banco.getTelefone().equals(telefone)) {
             banco.setTelefone(telefone);
         }
 
-        if(usuarioService.persistir(banco) != null){
+        if (usuarioService.persistir(banco) != null) {
             System.out.println("************ Usuário atualizado com sucesso! *********");
         }
 
         return mv;
+    }
+
+
+    @RequestMapping(value = "/csv", method = RequestMethod.GET)
+    public void baixarCsv(HttpServletResponse response) throws IOException {
+
+        ExportCSV e = new ExportCSV();
+        File file = e.exportCsv(solicitacaoService.listarTodasSolicitacoes());
+
+        response.setContentType("application/csv");
+        response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
+
+        BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
+        BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());
+
+        byte[] buffer = new byte[1024];
+        int bytesRead = 0;
+
+        while ((bytesRead = inStrem.read(buffer)) != -1) {
+            outStream.write(buffer, 0, bytesRead);
+        }
+
+        outStream.flush();
+        inStrem.close();
     }
 
 

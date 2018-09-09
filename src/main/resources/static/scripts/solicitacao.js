@@ -13,18 +13,17 @@ $(document).ready(function(){
         $('#aviso').prop("class", "");
     });
 
+
     $('#fotos').change(function () {
-       var tamanho = $(this).val();
+       var tamanho = this.files;
 
        if(tamanho.length > 6){
            $('#btnCadastrar').prop("disabled", true);
            $('#aviso').prop("class", "red-text");
 
        }else{
-           if($('#btnCadastrar').prop("disabled", true)){
-               $('#btnCadastrar').prop("disabled", false);
-               $('#aviso').prop("class", "");
-           }
+           $('#btnCadastrar').prop("disabled", false);
+           $('#aviso').prop("class", "");
        }
     });
 
