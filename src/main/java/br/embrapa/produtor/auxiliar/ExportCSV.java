@@ -2,9 +2,9 @@ package br.embrapa.produtor.auxiliar;
 
 
 import br.embrapa.produtor.interfaces.ExportToFile;
-import br.embrapa.produtor.models.Solicitacao;
 
 import java.io.*;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,14 +15,13 @@ public class ExportCSV implements ExportToFile {
     private static final String DELIMITADOR_LINHA = "\n";
 
     //File header
-    private static final String HEADER = "PRODUTOR,DATA,FOTO,CULTURA,DOENÇA,PESQUISADOR";
+    private static final String HEADER = "PRODUTOR_ID,PRODUTOR,DATA,FOTO,CULTURA,DOENÇA,PESQUISADOR_ID,PESQUISADOR";
 
 
-    public File exportCsv(Iterable<Solicitacao> list){
+    public File exportCsv(List<Object[]> list) {
 
-        try
-        {
-            File file = File.createTempFile("temp",".csv");
+        try {
+            File file = File.createTempFile("temp", ".csv");
             FileWriter fileWriter = new FileWriter(file);
 
             //Adding the header
@@ -30,37 +29,43 @@ public class ExportCSV implements ExportToFile {
             //New Line after the header
             fileWriter.append(DELIMITADOR_LINHA);
 
+            for (Object[] row : list) {
 
-            for (Solicitacao solicitacao : list) {
-                try {
-                    fileWriter.append(solicitacao.getId().toString());
-                    fileWriter.append(DELIMITADOR);
-                    fileWriter.append(solicitacao.getCidade());
-                    fileWriter.append(DELIMITADOR);
-                    fileWriter.append(solicitacao.getCultura().getNome());
-                    fileWriter.append(DELIMITADOR);
-                    fileWriter.append(String.valueOf(solicitacao.getProdutor().getNome()));
-                    fileWriter.append(DELIMITADOR_LINHA);
-                } catch (IOException e) {
-                    System.out.println(e + " ERRO!");
+                for (int i = 0; i < row.length; i++) {
+
+                    try {
+                        fileWriter.append(row[i].toString());
+                        fileWriter.append(DELIMITADOR);
+                    } catch (IOException e) {
+                        System.out.println(e + " ERRO! Não foi possível inserir uma nova linha.");
+                    }
                 }
 
+                try {
+                    fileWriter.append(DELIMITADOR_LINHA);
+                } catch (IOException e) {
+
+                }
             }
 
             fileWriter.flush();
             fileWriter.close();
 
             return file;
-        }
-        catch(Exception ee)
-        {
-            ee.printStackTrace();
-            return null;
+
+        } catch (IOException e) {
+            System.out.println("ERRO! Não foi possível gravar no arquivo...");
         }
 
+        return null;
     }
 
-    @Override
+
+
+
+
+
+        @Override
     public BufferedReader file() {
 
         String toWrite = "Hello";

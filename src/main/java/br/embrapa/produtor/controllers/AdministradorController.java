@@ -5,6 +5,7 @@ import br.embrapa.produtor.constants.Modulo;
 import br.embrapa.produtor.constants.TipoUsuario;
 import br.embrapa.produtor.models.Role;
 import br.embrapa.produtor.models.Usuario;
+import br.embrapa.produtor.serviceimpl.CsvQuery;
 import br.embrapa.produtor.serviceimpl.RoleServiceImplents;
 import br.embrapa.produtor.serviceimpl.SolicitacaoServiceImplements;
 import br.embrapa.produtor.serviceimpl.UsuarioServiceImpl;
@@ -36,6 +37,9 @@ public class AdministradorController {
 
     @Autowired
     SolicitacaoServiceImplements solicitacaoService;
+
+    @Autowired
+    CsvQuery csvQuery;
 
     @RequestMapping("/pagina")
     public ModelAndView paginaAdministrador(Principal principal) {
@@ -164,7 +168,9 @@ public class AdministradorController {
     public void baixarCsv(HttpServletResponse response) throws IOException {
 
         ExportCSV e = new ExportCSV();
-        File file = e.exportCsv(solicitacaoService.listarTodasSolicitacoes());
+        List<Object[]> lista = csvQuery.listaInteligencia();
+
+        File file = e.exportCsv(lista);
 
         response.setContentType("application/csv");
         response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
