@@ -1,6 +1,5 @@
 package br.embrapa.produtor.endpoint;
 
-import br.embrapa.produtor.auxiliar.UsuarioUtils;
 import br.embrapa.produtor.models.Usuario;
 import br.embrapa.produtor.serviceimpl.EmailServiceImpl;
 import br.embrapa.produtor.serviceimpl.UsuarioServiceImpl;
@@ -18,9 +17,6 @@ public class UsuarioEndPoint {
 
     @Autowired
     UsuarioServiceImpl usuarioService;
-
-    @Autowired
-    UsuarioUtils usuarioUtils;
 
     @Autowired
     EmailServiceImpl emailService;
@@ -74,8 +70,6 @@ public class UsuarioEndPoint {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{mensagem: não foi encontrar o usuário}");
     }
-
-
 
 
 }

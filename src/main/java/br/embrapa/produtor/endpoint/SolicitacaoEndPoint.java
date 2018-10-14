@@ -49,7 +49,7 @@ public class SolicitacaoEndPoint {
     }
 
 
-    @GetMapping("/{id}/usuario/")
+    @GetMapping("/usuario/{id}")
     public ResponseEntity getSolicitacaoUsuario(@PathVariable Long id){
         Usuario usuario = usuarioService.buscarPorId(id);
         Optional<Iterable<Solicitacao>> solicitacoes = Optional.ofNullable(solicitacaoService.listarTodasSolicitacoesPorProdutor(usuario));
@@ -78,9 +78,9 @@ public class SolicitacaoEndPoint {
      * @param cidade        cidade
      * @param estado        estado
      * @param id            id do Usuario
-     * @return              retorna um objeto solicitacao
+     * @return              retorna um objeto solicitacao,,b,
      */
-    @PostMapping
+    @PutMapping
     public ResponseEntity putSolicitacao(@RequestBody Solicitacao solicitacao,
                                          @RequestParam MultipartFile[] fotos,
                                          @RequestParam String cultura,
