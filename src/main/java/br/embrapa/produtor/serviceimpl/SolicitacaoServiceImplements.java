@@ -6,6 +6,8 @@ import br.embrapa.produtor.models.Usuario;
 import br.embrapa.produtor.repositories.SolicitacaoRepository;
 import br.embrapa.produtor.services.SolicitacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class SolicitacaoServiceImplements implements SolicitacaoService {
     SolicitacaoRepository solicitacaoRepository;
 
     @Override
+    @Cacheable("solicitacoes")
     public Iterable<Solicitacao> listarTodasSolicitacoes() {
         return this.solicitacaoRepository.findAll();
     }
@@ -29,11 +32,13 @@ public class SolicitacaoServiceImplements implements SolicitacaoService {
     }
 
     @Override
+    @CachePut("solicitacoes")
     public Solicitacao cadastrarSolicitacao(Solicitacao solicitacao) {
         return this.solicitacaoRepository.save(solicitacao);
     }
 
     @Override
+    @CachePut("solicitacoes")
     public Solicitacao atualizarSolicitacao(Solicitacao solicitacao) {
         return this.solicitacaoRepository.save(solicitacao);
     }
@@ -49,6 +54,7 @@ public class SolicitacaoServiceImplements implements SolicitacaoService {
     }
 
     @Override
+    @Cacheable("solicitacoes")
     public Page<Solicitacao> listarTodasAsSolicitacoesPorPagina(Pageable pageable) {
         return this.solicitacaoRepository.findAll(pageable);
     }

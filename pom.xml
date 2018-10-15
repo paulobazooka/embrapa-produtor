@@ -113,8 +113,11 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
     </dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
