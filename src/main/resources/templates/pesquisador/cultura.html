@@ -17,7 +17,9 @@
                                     <th>NOME</th>
                                     <th>NOME CIENTÍFICO</th>
                                     <th>TIPO</th>
+<!--
                                     <th sec:authorize="hasRole('ROLE_PESQUISADOR')">EDITAR</th>
+-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -27,7 +29,9 @@
                                         <td> <span th:text="${cultura.nome}"></span></td>
                                         <td> <span th:text="${cultura.nomecientifico}"></span></td>
                                         <td> <span th:text="${cultura.tipo.tipo}"></span></td>
+<!--
                                         <td sec:authorize="hasRole('ROLE_PESQUISADOR')"><a href="#" class="btn-small blue waves-effect waves-light"><i class="material-icons">edit</i></a></td>
+-->
                                     </tr>
                                 </div>
                                 </tbody>

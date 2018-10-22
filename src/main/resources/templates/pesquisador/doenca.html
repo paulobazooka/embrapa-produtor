@@ -12,10 +12,12 @@
                         </div>
                         <div th:if="${culturas}">
                             <div th:each="cultura : ${culturas}">
-                                <h6 class="green-text" th:text="${cultura.nome}"></h6>
-                                <ul th:each="doenca : ${cultura.doencas}">
-                                    <li th:text="${doenca.doenca}"></li>
-                                </ul>
+                                <h6 class="orange-text" th:text="${cultura.nome}"></h6>
+                                <div th:if="${cultura.doencas}">
+                                    <ul th:each="doenca : ${cultura.doencas}">
+                                        <li th:text="${doenca.doenca}" class="green-text"></li>
+                                    </ul>
+                                </div>
                                 <hr>
                             </div>
                         </div>
