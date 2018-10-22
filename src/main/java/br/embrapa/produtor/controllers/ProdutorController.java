@@ -67,10 +67,10 @@ public class ProdutorController {
         Iterable<Cultura> culturas = culturaService.listarCulturasPorOrdemAlfabetica();
         mv.addObject("culturas", culturas);
 
-        Solicitacao ultima = solicitacaoService.buscarUltimaSolicitacaoRealizada(user);
+       /* Solicitacao ultima = solicitacaoService.buscarUltimaSolicitacaoRealizada(user);
         if (ultima != null){
             mv.addObject("ultima", ultima);
-        }
+        }*/
 
         mv.addObject("local", "solicitacao/solicitacao");
         mv.addObject("fragmento", "solicitacao");

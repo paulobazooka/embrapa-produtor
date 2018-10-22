@@ -29,7 +29,37 @@ $(document).ready(function () {
 // Função para buscar os estados
 function buscarEstados() {
 
-    var requisicaoEstados = new XMLHttpRequest();
+
+    var option = "";
+    option += '<option id="12">Acre</option>';
+    option += '<option id="27">Alagoas</option>';
+    option += '<option id="16">Amapá</option>';
+    option += '<option id="13">Amazonas</option>';
+    option += '<option id="29">Bahia</option>';
+    option += '<option id="23">Ceará</option>';
+    option += '<option id="53">Distrito Federal</option>';
+    option += '<option id="32">Espírito Santo</option>';
+    option += '<option id="52">Goiás</option>';
+    option += '<option id="21">Maranhão</option>';
+    option += '<option id="51">Mato Grosso</option>';
+    option += '<option id="50">Mato Grosso do Sul</option>';
+    option += '<option id="31">Minas Gerais</option>';
+    option += '<option id="15">Pará</option>';
+    option += '<option id="25">Paraíba</option>';
+    option += '<option id="41">Paraná</option>';
+    option += '<option id="26">Pernambuco</option>';
+    option += '<option id="22">Piauí</option>';
+    option += '<option id="34">Rio de Janeiro</option>';
+    option += '<option id="24">Rio Grande do Norte</option>';
+    option += '<option id="43">Rio Grande do Sul</option>';
+    option += '<option id="11">Rondônia</option>';
+    option += '<option id="14">Roraima"</option>';
+    option += '<option id="42">Santa Catarina</option>';
+    option += '<option id="35">São Paulo</option>';
+    option += '<option id="28">Sergipe</option>';
+    option += '<option id="17">Tocantins</option>';
+
+   /* var requisicaoEstados = new XMLHttpRequest();
     var tipo = 'GET';
     var assincrona = true;
 
@@ -56,7 +86,7 @@ function buscarEstados() {
                 if(obj[i] != null) {
                     option += '<option value="' + obj[i].nome + '" id="' + obj[i].id + '">' + obj[i].nome + '</option>';
                 }
-            }
+            }*/
 
             option += "</option>";
 
@@ -65,18 +95,19 @@ function buscarEstados() {
 
             $('#estados').formSelect();
 
-            if ($('#ultimoestado').text() != null){
+            /*if ($('#ultimoestado').text() != null){
                 $('#estados option:contains(' + $('#ultimoestado').text() + ')').attr('selected', 'selected');
                 $('#estados').formSelect();
                 buscarCidades();
-            }
+            }*/
 
 
 
             // habilita o select cidades
             $("#cidades").removeAttr('disabled');
-        }
-    }
+            buscarCidades();
+
+
 }
 
 // Função para buscar as cidades dependendo do estado escolhido
