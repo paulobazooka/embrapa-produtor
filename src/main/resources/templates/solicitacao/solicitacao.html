@@ -24,7 +24,9 @@
                                         <th sec:authorize="hasRole('ROLE_PESQUISADOR')">CIDADE</th>
                                         <th sec:authorize="hasRole('ROLE_PESQUISADOR')">ESTADO</th>
                                         <th>VISUALISAR</th>
+<!--
                                         <th sec:authorize="hasRole('ROLE_PESQUISADOR')">EDITAR</th>
+-->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -37,7 +39,9 @@
                                             <td sec:authorize="hasRole('ROLE_PESQUISADOR')"> <span th:text="${solicitacao.cidade}"></span>         </td>
                                             <td sec:authorize="hasRole('ROLE_PESQUISADOR')"> <span th:text="${solicitacao.estado}"></span>         </td>
                                             <td> <a href="#" th:href="@{'/detalhes-solicitacao/' + ${solicitacao.id}}" class="btn-small orange waves-effect waves-light"><i class="material-icons">visibility</i></a></td>
+<!--
                                             <td sec:authorize="hasRole('ROLE_PESQUISADOR')"><a href="#" class="btn-small blue waves-effect waves-light"><i class="material-icons">edit</i></a></td>
+-->
                                         </tr>
                                     </div>
                                 </tbody>
