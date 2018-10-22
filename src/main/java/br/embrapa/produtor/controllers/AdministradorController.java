@@ -57,21 +57,23 @@ public class AdministradorController {
                                         @RequestParam("telefone") String telefone,
                                         @RequestParam("senha") String senha,
                                         @RequestParam("confirma") String confirma,
-                                        @RequestParam("tipo") String tipo) {
+                                        @RequestParam("tipos") String tipo) {
+
+        System.out.println("***************************");
 
         ModelAndView mv = carregarPrincipal(principal);
 
         List<Role> roles = new ArrayList<>();
 
-        if (tipo.equals(TipoUsuario.ADMINISTRADOR.name())) {
-            roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PRODUTOR.name()));
-            roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PESQUISADOR.name()));
-            roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_ADMIN.name()));
+        if (tipo.equals(TipoUsuario.ADMINISTRADOR.toString())) {
+            roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PRODUTOR.toString()));
+            roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PESQUISADOR.toString()));
+            roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_ADMIN.toString()));
         } else {
             if (tipo.equals(TipoUsuario.PESQUISADOR.name())) {
-                roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PESQUISADOR.name()));
+                roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PESQUISADOR.toString()));
             } else {
-                roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PRODUTOR.name()));
+                roles.add(roleServiceImplents.buscarRole(Modulo.ROLE_PRODUTOR.toString()));
             }
         }
 
