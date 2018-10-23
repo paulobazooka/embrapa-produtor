@@ -13,7 +13,7 @@ public class Cultura extends Abstract{
     private String nomecientifico;
     @ManyToOne
     private TipoCultura tipo;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<DoencaCultura> doencas = new ArrayList<>();
 
     public Cultura() {

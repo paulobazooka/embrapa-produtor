@@ -26,7 +26,7 @@ public class Usuario extends Abstract implements UserDetails {
     private boolean ativo;
     private boolean nova_senha;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private List<Role> roles = new ArrayList<>();
 
     public Usuario() {

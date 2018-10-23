@@ -59,8 +59,6 @@ public class AdministradorController {
                                         @RequestParam("confirma") String confirma,
                                         @RequestParam("tipos") String tipo) {
 
-        System.out.println("***************************");
-
         ModelAndView mv = carregarPrincipal(principal);
 
         List<Role> roles = new ArrayList<>();
