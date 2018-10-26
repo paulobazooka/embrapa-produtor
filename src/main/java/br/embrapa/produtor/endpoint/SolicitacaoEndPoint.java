@@ -37,6 +37,18 @@ public class SolicitacaoEndPoint {
     CulturaServiceImplements culturaService;
 
 
+    @GetMapping
+    public ResponseEntity getSolicitacoes(){
+        Optional<Iterable<Solicitacao>> solicitacoes = Optional.ofNullable(solicitacaoService.listarTodasSolicitacoes());
+
+        if(solicitacoes.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(solicitacoes);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{mensagem: nenhuma solicitação encontrada}");
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity getSolicitacao(@PathVariable Long id){
         Optional<Solicitacao> solicitacao = Optional.ofNullable(solicitacaoService.buscarSolicitacao(id));

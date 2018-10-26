@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,7 +41,7 @@ public class PrincipalController {
     @Autowired
     AmazonS3Client amazonS3Client;
 
-    @RequestMapping("/")
+    @RequestMapping(value="/", method = RequestMethod.GET)
     public ModelAndView principal(Principal principal,
                                   Pageable pageable,
                                   @RequestParam(defaultValue = "0") int page){

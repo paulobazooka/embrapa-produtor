@@ -15,7 +15,6 @@ import java.util.List;
 @Table(name = "usuario")
 public class Usuario extends Abstract implements UserDetails {
 
-
     private String senha;
     private String email;
     private String nome;
@@ -26,7 +25,7 @@ public class Usuario extends Abstract implements UserDetails {
     private boolean ativo;
     private boolean nova_senha;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
 
     public Usuario() {

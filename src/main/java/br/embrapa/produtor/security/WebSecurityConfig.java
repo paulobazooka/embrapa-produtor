@@ -1,6 +1,9 @@
 package br.embrapa.produtor.security;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +15,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 
-@Configuration @EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     private final static String LOGIN_PAGE = "/login";
@@ -42,10 +46,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+        http
+                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,  PAGES_PERMITED).permitAll()
+                .antMatchers(HttpMethod.GET, PAGES_PERMITED).permitAll()
                 .antMatchers(HttpMethod.POST, PAGES_PERMITED).permitAll()
                 .antMatchers(STATIC_DIR).permitAll()
                 .anyRequest().authenticated()
@@ -61,7 +66,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 
-
     @Override
     public void configure(WebSecurity web) {
         web
@@ -75,4 +79,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .userDetailsService(implementsUserDetails)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
+
+
+
+
+
+    /**
+     *    Classe de configuração de acesso via API
+     *
+     *
+     *
+     */
+    @Configuration
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.csrf().disable();
+            http.antMatcher("/api/**") //
+                    .authorizeRequests().anyRequest().authenticated() //
+                    .and() //
+                    .httpBasic();
+        }
+
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth
+                    .userDetailsService(implementsUserDetails)
+                    .passwordEncoder(new BCryptPasswordEncoder());
+        }
+    }
+
 }
+
