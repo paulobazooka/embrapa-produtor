@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
             "/cadastrar-produtor",
             "/cadastrar-novo-produtor",
             "/usuario/confirmar-cadastro/*",
+            "usuario/pagina-solicitacao-nova-senha/*",
             "/produtor/cadastro",
             "/usuario/*",
             "/novasenha",
