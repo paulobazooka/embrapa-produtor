@@ -104,7 +104,6 @@ public class UsuarioController {
     public String retornaPaginaDeNovaSenha(@PathVariable Long id, Model model){
 
         Usuario user = usuarioService.buscarPorId(id);
-        System.out.println("******** " + user.getNome() + "**********");
 
         if ((user != null) && (user.isNova_senha())){
                 model.addAttribute("id", user.getId());

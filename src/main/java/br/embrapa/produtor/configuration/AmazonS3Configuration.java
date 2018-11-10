@@ -18,9 +18,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmazonS3Configuration {
 
-    private final String ACCESS_KEY_ID = "AKIAJPD6DSVMEW4DIF4A";
-    private final String SECRET_ACCESS_KEY = "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";
-    private final String REGION = "sa-east-1";
+    private final String ACCESS_KEY_ID = "";
+    private final String SECRET_ACCESS_KEY = "";
+    private final String REGION = "";
 
     @Bean
     public AmazonS3 s3client() {
